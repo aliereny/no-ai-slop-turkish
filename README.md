@@ -139,7 +139,7 @@ python scripts/check_turkish_surface.py
 python scripts/build_plugin.py --check
 ~~~
 
-`check_turkish_surface.py`, eski `/no-ai-slop` kimliğinin veya upstream'den kalan İngilizce kullanıcı arayüzü ifadelerinin Türkçe yüzeye sızmasını engeller. Ayrıca plugin manifest kimliğini ve iki `openai.yaml` dosyasının birebir aynı kalmasını denetler. GitHub Actions aynı kontrolleri her pull request ve `main` push'unda otomatik çalıştırır.
+`check_turkish_surface.py`, eski skill kimliklerinin veya upstream'den kalan İngilizce kullanıcı arayüzü ifadelerinin Türkçe yüzeye sızmasını engeller. Ayrıca plugin manifest kimliğini ve iki `openai.yaml` dosyasının birebir aynı kalmasını denetler. GitHub Actions aynı kontrolleri her pull request ve `main` push'unda otomatik çalıştırır.
 
 ## Upstream ile ilişki
 
