@@ -1,34 +1,45 @@
-# No AI Slop Türkçe plugin submission
+# No AI Slop Türkçe — plugin başvurusu
 
-## Positioning
+## Konumlandırma
 
-No AI Slop Türkçe is the Turkish-specific fork of [petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop). It preserves the upstream plugin architecture while separating the Turkish package and skill identity.
+No AI Slop Türkçe, [petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop) tabanlı Türkçeye özel bir uyarlamadır. Upstream plugin mimarisini mümkün olduğunca paralel tutarken paket kimliğini, skill kimliğini, Türkçe AI slop taksonomisini ve değerlendirme sözleşmesini ayrı geliştirir.
 
-## Scope
+## Kapsam
 
-- Plugin/package name: `no-ai-slop-turkish`
-- Skill name and command: `no-ai-slop-tr` / `/no-ai-slop-tr`
-- Language scope: predominantly Turkish writing only
-- Upstream structure, packaging, and release flow stay parallel where practical
+- Plugin/paket adı: **no-ai-slop-turkish**
+- Skill adı ve komutu: **no-ai-slop-tr** / **/no-ai-slop-tr**
+- Dil kapsamı: ağırlıklı olarak Türkçe yazılar
+- Çalışma modları: düzenleme ve tespit
+- Türkçe taksonomi: 28 kalıp
+- Davranışsal regresyon corpus'u: pozitif, zor negatif, overlap, dil kapsamı ve kalite vakaları
+- Upstream paketleme ve release akışı: pratik olduğu ölçüde paralel
 
-The Turkish-specific slop taxonomy and full eval rewrite are intentionally out of scope for this foundation change.
+Kod, ürün adı, marka, teknik terim veya kısa yabancı dil alıntıları içeren Türkçe metinler kapsam içindedir. Ağırlıklı olarak Türkçe olmayan girdiler düzenleme veya tespit iş akışına alınmaz.
 
-## Directory publication gate
+## Dizin başvurusu kontrolü
 
-Version `0.1.0` is a foundation release and should not be submitted to the public plugin directory yet. Submit only after the Turkish-specific slop taxonomy, examples, and corresponding eval coverage have landed.
+Türkçeye özgü taksonomi, self-eval sözleşmesi ve davranışsal eval corpus'u repoda mevcuttur. Önceki “taksonomi ve eval tamamlanana kadar başvurma” koşulu bu repo açısından karşılanmıştır.
 
-A successful `scripts/build_plugin.py` run validates this repository's package contract and selected directory constraints; it is not a substitute for the platform's final submission validation.
+Public plugin dizinine gönderimden önce:
 
-## Starter prompts
+1. **python scripts/build_plugin.py --check** çalıştırılmalı.
+2. Üretilen paketin plugin metadata'sı, skill dosyaları ve hukuki bağlantıları son kez kontrol edilmeli.
+3. Platformun güncel başvuru ve doğrulama kuralları ayrıca uygulanmalı.
 
-1. @No AI Slop Türkçe (metin)
-2. @No AI Slop Türkçe bu metinde AI slop var mı? (metin)
+Repo içindeki build kontrolünün başarılı olması, platformun nihai başvuru doğrulamasının yerine geçmez.
 
-## Negative test cases
+## Başlangıç istemleri
 
-1. Given a predominantly English draft, do not run edit or detect mode. Briefly state that the skill is scoped to Turkish text and leave the draft unchanged.
-2. Do not translate non-Turkish input unless the user explicitly asks for translation.
+1. **@No AI Slop Türkçe Bu metni doğal Türkçeyi ve kişisel sesimi koruyarak düzenle: (metin)**
+2. **@No AI Slop Türkçe Bu metindeki AI slop kalıplarını tespit et: (metin)**
 
-## Release notes
+## Negatif testler
 
-Version 0.1.0 establishes the independent Turkish plugin identity, renames the skill to `no-ai-slop-tr`, updates package/build paths, and points metadata to the Turkish fork. It is not intended for public directory submission until the Turkish taxonomy and eval coverage are complete.
+1. Ağırlıklı olarak İngilizce veya başka bir dilde olan taslakta edit ya da detect modunu çalıştırma. Skill'in Türkçe metinlerle sınırlı olduğunu kısa biçimde belirt ve metni değiştirme.
+2. Kullanıcı açıkça çeviri istemedikçe Türkçe olmayan girdiyi Türkçeye çevirme.
+3. Tespit modunda AI yazarlığı iddiası veya yapay bir slop yüzdesi üretme.
+4. “Bu bağlamda”, “-maktadır” veya edilgen yapı gibi yüzey biçimlerini bağlamdan bağımsız hata sayma.
+
+## Sürüm notu
+
+Sürüm **0.1.0**, bağımsız Türkçe plugin kimliğini, **no-ai-slop-tr** skill'ini, Türkçeye özgü 28 kalıplı taksonomiyi, self-eval kalite kapısını ve davranışsal eval corpus'unu içerir. Kullanıcıya görünen dokümantasyon, gizlilik ve kullanım koşulları da Türkçe ürün yüzeyiyle uyumludur.

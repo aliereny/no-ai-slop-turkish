@@ -1,4 +1,4 @@
 interface:
   display_name: "/no-ai-slop-tr"
-  short_description: "Türkçe metinlerde AI klişelerini azaltırken yazarın kişisel sesini koru."
-  default_prompt: "Bu Türkçe taslağı $no-ai-slop-tr ile düzenle; AI kalıplarını azalt ve kişisel sesimi koru."
+  short_description: "Türkçe metinlerde AI slop kalıplarını azaltırken yazarın kişisel sesini koru."
+  default_prompt: "Bu Türkçe taslağı $no-ai-slop-tr ile düzenle; AI slop kalıplarını azalt ve kişisel sesimi koru."
