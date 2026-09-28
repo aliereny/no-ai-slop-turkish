@@ -1,9 +1,9 @@
-# Privacy
+# Gizlilik
 
-No AI Slop Türkçe is a skills-only plugin. It does not run an external server, require an account, or collect, store, or sell personal data.
+No AI Slop Türkçe yalnızca skill dosyalarından oluşan bir plugindir. Harici bir sunucu çalıştırmaz, hesap oluşturmanızı gerektirmez ve kişisel verileri toplamaz, saklamaz veya satmaz.
 
-The text you provide is processed by the ChatGPT or Codex product where you use the plugin. That processing is covered by the privacy terms of that product.
+Sağladığınız metin, plugini kullandığınız ChatGPT veya Codex ürünü tarafından işlenir. Bu işleme, ilgili ürünün gizlilik koşullarına tabidir.
 
-Visiting the project GitHub repository may create normal web server and analytics logs under GitHub's policies.
+Projenin GitHub deposunu ziyaret ettiğinizde GitHub'ın politikaları kapsamında standart web sunucusu ve analiz kayıtları oluşabilir.
 
-Questions and project feedback: https://github.com/aliereny/no-ai-slop-turkish/issues
+Sorular ve proje geri bildirimleri: https://github.com/aliereny/no-ai-slop-turkish/issues
