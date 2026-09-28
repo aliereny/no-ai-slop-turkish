@@ -1,6 +1,10 @@
-# No AI Slop
+# No AI Slop Türkçe
 
-Remove 20+ patterns of AI slop from your writing without flattening your personal voice.
+Türkçe yazılardaki AI klişelerini azaltırken yazarın kişisel sesini koruyan, [No AI Slop](https://github.com/petergyang/no-ai-slop) tabanlı Türkçe fork.
+
+## Language scope
+
+This fork is scoped to Turkish writing. The package and skill identity are Turkish-specific; the Turkish slop taxonomy and eval rewrite will be handled separately.
 
 https://github.com/user-attachments/assets/f3055450-78eb-4672-880a-88a4fa54bde9
 
@@ -14,26 +18,26 @@ AI makes it easy to generate clean writing that all sounds the same. Even the be
 
 When you use AI to edit, it can also smooth away the vocabulary, cadence, humor, and imperfections that make the writing sound like you.
 
-## How to install No AI Slop
+## How to install No AI Slop Türkçe
 
 The easiest way to install the skill is to paste this into ChatGPT, Claude Code, Codex, or your favorite coding agent:
 
 ```text
-Install the /no-ai-slop skill globally from https://github.com/petergyang/no-ai-slop
+Install the /no-ai-slop-tr skill globally from https://github.com/aliereny/no-ai-slop-turkish
 ```
 
 You can also install it with `npx`:
 
 ```sh
-npx skills add petergyang/no-ai-slop --skill no-ai-slop --global --yes
+npx skills add aliereny/no-ai-slop-turkish --skill no-ai-slop-tr --global --yes
 ```
 
-## How to use No AI Slop
+## How to use No AI Slop Türkçe
 
 ### Edit your writing
 
 ```text
-/no-ai-slop (your writing)
+/no-ai-slop-tr (your writing)
 ```
 
 The skill removes the AI slop patterns, preserves your personal voice, and lists what it changed.
@@ -41,7 +45,7 @@ The skill removes the AI slop patterns, preserves your personal voice, and lists
 ### Detect slop
 
 ```text
-/no-ai-slop is this slop? (your writing)
+/no-ai-slop-tr is this slop? (your writing)
 ```
 
 The skill quotes every slop pattern it found without guessing whether AI wrote the text.
@@ -73,18 +77,22 @@ It also checks the fundamentals: Lead with the point when that helps, use active
 
 ## What’s inside
 
-- [`SKILL.md`](skills/no-ai-slop/SKILL.md) contains the editing rules and workflow.
-- [`eval.md`](skills/no-ai-slop/eval.md) contains the checks the skill runs on its work.
+- [`SKILL.md`](skills/no-ai-slop-tr/SKILL.md) contains the editing rules and workflow.
+- [`eval.md`](skills/no-ai-slop-tr/eval.md) contains the checks the skill runs on its work.
 - [`.codex-plugin/plugin.json`](.codex-plugin/plugin.json) contains the ChatGPT and Codex plugin metadata.
 - [`build_plugin.py`](scripts/build_plugin.py) builds and validates the plugin package.
 
-No AI Slop is also available as a plugin in ChatGPT.
+No AI Slop Türkçe is packaged as a ChatGPT and Codex plugin.
 
 ## Want more great AI skills?
 
 Check out [Behind the Craft](https://behindthecraft.com), my personal AI system with over a dozen other quality skills and courses.
 
 Subscribe to my [YouTube channel](https://www.youtube.com/@PeterYangYT?sub_confirmation=1) and [newsletter](https://creatoreconomy.so) for practical AI tutorials and interviews.
+
+## Upstream
+
+Based on [petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop), licensed under MIT.
 
 ## License
 

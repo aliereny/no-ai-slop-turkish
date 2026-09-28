@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build and validate the distributable No AI Slop plugin archive."""
+"""Build and validate the distributable No AI Slop Türkçe plugin archive."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST = ROOT / ".codex-plugin" / "plugin.json"
 DIST = ROOT / "dist"
-SKILL_ROOT = ROOT / "skills" / "no-ai-slop"
+SKILL_ROOT = ROOT / "skills" / "no-ai-slop-tr"
 
 
 def parse_args() -> argparse.Namespace:
@@ -52,11 +52,11 @@ def validate_source(manifest: dict) -> None:
 
 
 def build_plugin(manifest: dict) -> tuple[Path, Path]:
-    plugin_root = DIST / "no-ai-slop"
+    plugin_root = DIST / "no-ai-slop-turkish"
     if plugin_root.exists():
         shutil.rmtree(plugin_root)
 
-    skill_root = plugin_root / "skills" / "no-ai-slop"
+    skill_root = plugin_root / "skills" / "no-ai-slop-tr"
     (plugin_root / ".codex-plugin").mkdir(parents=True)
     (plugin_root / "assets").mkdir(parents=True)
     skill_root.mkdir(parents=True)
@@ -69,7 +69,7 @@ def build_plugin(manifest: dict) -> tuple[Path, Path]:
     shutil.copy2(ROOT / "PRIVACY.md", plugin_root / "PRIVACY.md")
     shutil.copy2(ROOT / "TERMS.md", plugin_root / "TERMS.md")
 
-    archive = DIST / f"no-ai-slop-plugin-{manifest['version']}.zip"
+    archive = DIST / f"no-ai-slop-turkish-plugin-{manifest['version']}.zip"
     if archive.exists():
         archive.unlink()
     with zipfile.ZipFile(archive, "w", compression=zipfile.ZIP_DEFLATED) as output:
@@ -83,8 +83,8 @@ def validate_build(plugin_root: Path, archive: Path) -> None:
     expected = {
         ".codex-plugin/plugin.json",
         "assets/no-ai-slop.png",
-        "skills/no-ai-slop/SKILL.md",
-        "skills/no-ai-slop/eval.md",
+        "skills/no-ai-slop-tr/SKILL.md",
+        "skills/no-ai-slop-tr/eval.md",
         "LICENSE",
         "PRIVACY.md",
         "TERMS.md",
@@ -97,8 +97,8 @@ def validate_build(plugin_root: Path, archive: Path) -> None:
     if expected != actual:
         raise SystemExit(f"Unexpected package files: expected {sorted(expected)}, found {sorted(actual)}")
 
-    packaged_skill = plugin_root / "skills" / "no-ai-slop" / "SKILL.md"
-    packaged_eval = plugin_root / "skills" / "no-ai-slop" / "eval.md"
+    packaged_skill = plugin_root / "skills" / "no-ai-slop-tr" / "SKILL.md"
+    packaged_eval = plugin_root / "skills" / "no-ai-slop-tr" / "eval.md"
     if packaged_skill.read_bytes() != (SKILL_ROOT / "SKILL.md").read_bytes():
         raise SystemExit("Packaged SKILL.md does not match the canonical file")
     if packaged_eval.read_bytes() != (SKILL_ROOT / "eval.md").read_bytes():
