@@ -42,11 +42,30 @@ def validate_source(manifest: dict) -> None:
     if missing_interface:
         raise SystemExit(f"Missing interface fields: {', '.join(missing_interface)}")
 
+    if len(interface["displayName"]) > 30:
+        raise SystemExit("Display name must be 30 characters or fewer for directory submission")
+    if len(interface["shortDescription"]) > 30:
+        raise SystemExit("Short description must be 30 characters or fewer for directory submission")
+    if len(interface["longDescription"]) > 4000:
+        raise SystemExit("Long description must be 4000 characters or fewer for directory submission")
+    if len(interface["developerName"]) > 80:
+        raise SystemExit("Developer name must be 80 characters or fewer for directory submission")
+
+    capabilities = interface["capabilities"]
+    if len(capabilities) > 20 or any(len(capability) > 120 for capability in capabilities):
+        raise SystemExit("Capabilities must contain at most 20 entries of 120 characters or fewer")
+
     prompts = interface["defaultPrompt"]
     if len(prompts) > 3 or any(len(prompt) > 128 for prompt in prompts):
         raise SystemExit("Starter prompts must contain at most three entries of 128 characters or fewer")
 
-    for source in (SKILL_ROOT / "SKILL.md", SKILL_ROOT / "eval.md", ROOT / "assets" / "no-ai-slop.png"):
+    package_sources = (
+        SKILL_ROOT / "SKILL.md",
+        SKILL_ROOT / "eval.md",
+        SKILL_ROOT / "agents" / "openai.yaml",
+        ROOT / "assets" / "no-ai-slop.png",
+    )
+    for source in package_sources:
         if not source.is_file():
             raise SystemExit(f"Missing package source: {source.relative_to(ROOT)}")
 
@@ -57,13 +76,15 @@ def build_plugin(manifest: dict) -> tuple[Path, Path]:
         shutil.rmtree(plugin_root)
 
     skill_root = plugin_root / "skills" / "no-ai-slop-tr"
+    skill_agents_root = skill_root / "agents"
     (plugin_root / ".codex-plugin").mkdir(parents=True)
     (plugin_root / "assets").mkdir(parents=True)
-    skill_root.mkdir(parents=True)
+    skill_agents_root.mkdir(parents=True)
 
     shutil.copy2(MANIFEST, plugin_root / ".codex-plugin" / "plugin.json")
     shutil.copy2(SKILL_ROOT / "SKILL.md", skill_root / "SKILL.md")
     shutil.copy2(SKILL_ROOT / "eval.md", skill_root / "eval.md")
+    shutil.copy2(SKILL_ROOT / "agents" / "openai.yaml", skill_agents_root / "openai.yaml")
     shutil.copy2(ROOT / "assets" / "no-ai-slop.png", plugin_root / "assets" / "no-ai-slop.png")
     shutil.copy2(ROOT / "LICENSE", plugin_root / "LICENSE")
     shutil.copy2(ROOT / "PRIVACY.md", plugin_root / "PRIVACY.md")
@@ -85,6 +106,7 @@ def validate_build(plugin_root: Path, archive: Path) -> None:
         "assets/no-ai-slop.png",
         "skills/no-ai-slop-tr/SKILL.md",
         "skills/no-ai-slop-tr/eval.md",
+        "skills/no-ai-slop-tr/agents/openai.yaml",
         "LICENSE",
         "PRIVACY.md",
         "TERMS.md",
@@ -99,10 +121,13 @@ def validate_build(plugin_root: Path, archive: Path) -> None:
 
     packaged_skill = plugin_root / "skills" / "no-ai-slop-tr" / "SKILL.md"
     packaged_eval = plugin_root / "skills" / "no-ai-slop-tr" / "eval.md"
+    packaged_agent = plugin_root / "skills" / "no-ai-slop-tr" / "agents" / "openai.yaml"
     if packaged_skill.read_bytes() != (SKILL_ROOT / "SKILL.md").read_bytes():
         raise SystemExit("Packaged SKILL.md does not match the canonical file")
     if packaged_eval.read_bytes() != (SKILL_ROOT / "eval.md").read_bytes():
         raise SystemExit("Packaged eval.md does not match the canonical file")
+    if packaged_agent.read_bytes() != (SKILL_ROOT / "agents" / "openai.yaml").read_bytes():
+        raise SystemExit("Packaged agents/openai.yaml does not match the canonical file")
     if not zipfile.is_zipfile(archive):
         raise SystemExit("Plugin archive is not a valid ZIP file")
 

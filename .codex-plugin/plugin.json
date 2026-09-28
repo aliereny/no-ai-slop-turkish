@@ -20,7 +20,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "No AI Slop Türkçe",
-    "shortDescription": "Türkçe metinlerde AI klişelerini azalt",
+    "shortDescription": "Türkçe AI klişelerini azalt",
     "longDescription": "Türkçe metinlerde yapay zekâya özgü klişe ve mekanik yazım kalıplarını azaltırken yazarın kişisel sesini korur. Düzenleme ve tespit modlarını destekler. Bu ilk Türkçe fork sürümü paket ve skill kimliğini Türkçeye ayırır; Türkçeye özgü slop taksonomisi ayrı bir aşamada geliştirilecektir.",
     "developerName": "aliereny",
     "category": "Productivity",

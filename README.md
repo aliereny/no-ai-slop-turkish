@@ -84,12 +84,6 @@ It also checks the fundamentals: Lead with the point when that helps, use active
 
 No AI Slop Türkçe is packaged as a ChatGPT and Codex plugin.
 
-## Want more great AI skills?
-
-Check out [Behind the Craft](https://behindthecraft.com), my personal AI system with over a dozen other quality skills and courses.
-
-Subscribe to my [YouTube channel](https://www.youtube.com/@PeterYangYT?sub_confirmation=1) and [newsletter](https://creatoreconomy.so) for practical AI tutorials and interviews.
-
 ## Upstream
 
 Based on [petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop), licensed under MIT.
