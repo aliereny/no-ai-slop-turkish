@@ -4,7 +4,7 @@ Türkçe yazılardaki AI klişelerini azaltırken yazarın kişisel sesini koruy
 
 ## Language scope
 
-This fork is scoped to Turkish writing. The package and skill identity are Turkish-specific; the Turkish slop taxonomy and eval rewrite will be handled separately.
+This fork is scoped to Turkish writing. The package, skill identity, Turkish-native slop taxonomy, and self-eval are Turkish-specific. A broader example-based behavioral eval corpus is planned separately.
 
 https://github.com/user-attachments/assets/f3055450-78eb-4672-880a-88a4fa54bde9
 
