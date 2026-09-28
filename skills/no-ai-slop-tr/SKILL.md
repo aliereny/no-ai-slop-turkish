@@ -9,7 +9,7 @@ Keskin ama ölçülü bir Türkçe editörü gibi çalış. Kullanıcının ne s
 
 ## Dil kapsamı
 
-Bu skill yalnızca ağırlıklı olarak Türkçe yazılar içindir. Metin ağırlıklı olarak Türkçe değilse düzenleme veya tespit iş akışını çalıştırma. Kısaca bu skill'in Türkçe metinlerle sınırlı olduğunu söyle. Kullanıcı açıkça çeviri istemedikçe metni Türkçeye çevirme.
+Bu araç yalnızca ağırlıklı olarak Türkçe yazılar içindir. Metin ağırlıklı olarak Türkçe değilse düzenleme veya tespit iş akışını çalıştırma. Kısaca bu aracın Türkçe metinlerle sınırlı olduğunu söyle. Kullanıcı açıkça çeviri istemedikçe metni Türkçeye çevirme.
 
 Kod, ürün adı, marka, teknik terim veya kısa yabancı dil alıntıları içeren Türkçe metinleri kapsam dışında sayma. Dil kapsamını mekanik kelime oranlarıyla değil, metnin ana anlatım dili ve cümle yapısıyla değerlendir.
 
@@ -19,7 +19,7 @@ Kod, ürün adı, marka, teknik terim veya kısa yabancı dil alıntıları içe
 
 Güçlü ve doğal bir metinde değişiklik gerekmiyorsa sırf değişiklik yapmış olmak için yeniden yazma. Bunu açıkça söyleyebilirsin.
 
-**Tespit et.** Kullanıcı bir metinde AI slop olup olmadığını sorar veya yeniden yazmadan tarama, denetleme ya da işaretleme ister. Bu skill'de tanımlanan her kalıbın adını ver, ilgili ifadeyi kısa biçimde alıntıla ve birkaç kelimeyle nasıl düzeltilebileceğini söyle. Metni yeniden yazma, puanlama yapma ve metnin AI tarafından yazıldığını iddia etme. Adlandırılmış kalıplar kullanıcının kontrol edebileceği gözlemlerdir; yazarlık tespiti değildir.
+**Tespit et.** Kullanıcı bir metinde AI slop olup olmadığını sorar veya yeniden yazmadan tarama, denetleme ya da işaretleme ister. Bu araç'de tanımlanan her kalıbın adını ver, ilgili ifadeyi kısa biçimde alıntıla ve birkaç kelimeyle nasıl düzeltilebileceğini söyle. Metni yeniden yazma, puanlama yapma ve metnin AI tarafından yazıldığını iddia etme. Adlandırılmış kalıplar kullanıcının kontrol edebileceği gözlemlerdir; yazarlık tespiti değildir.
 
 Tespit sonunda kullanıcı isterse metni düzenleyebileceğini söyleyebilirsin.
 
@@ -52,7 +52,7 @@ Amaç belirsizse okurun metni okuduktan sonra ne düşünmesini, hissetmesini ve
 
 ## Genellikle çıkarılacak sözcük ve ifadeler
 
-Bu skill'in bağlamdan bağımsız bir “yasaklı kelime” listesi yoktur. Bir kelimeyi gördüğün anda silme; cümlede ne iş yaptığını kontrol et.
+Bu araç'in bağlamdan bağımsız bir “yasaklı kelime” listesi yoktur. Bir kelimeyi gördüğün anda silme; cümlede ne iş yaptığını kontrol et.
 
 **Bağlama göre boş olabilen zarflar ve güçlendiriciler:** “oldukça”, “gerçekten”, “aslında”, “temelde”, “son derece”, “önemli ölçüde”, “özellikle”. Anlam, ton, karşıtlık veya yazarın doğal konuşma ritmi değişmiyorsa çıkar. Gerçek bir vurgu veya nüans taşıyorsa koru.
 
@@ -101,6 +101,34 @@ Aşağıdaki kalıplar tek başlarına “AI yazısı” kanıtı değildir. Her
 **Biçimlendirme slop'u.** Başlıklarda gereksiz emoji, cümle ortasında dekoratif kalın yazı, iki cümlelik bölümlerin üstüne gereksiz başlık ve iki cümlelik düz anlatımın yerine süs olarak madde listesi kullanma. Biçim içeriği izlesin; içeriği süslemesin. Kullanıcının formatı veya yayın kanalı bu öğeleri gerçekten gerektiriyorsa koru.
 
 **Uzun çizgi.** Uzun çizgiyi (—) Türkçe metinde tek başına slop işareti sayma. Ancak virgül, nokta veya parantezin daha doğal olduğu yerde dekoratif ritim aracı olarak sürekli tekrarlanıyorsa azalt. Kısa metinlerde gereksiz kümeleri temizle; uzun metinlerde anlamı ve ritmi gerçekten iyileştiren kullanımları koru.
+
+## Çıktı biçimi
+
+### Tespit modu
+
+Bulunan her kalıbı ayrı ayrı adlandır. İlgili ifadeyi kısa biçimde alıntıla ve tek cümlelik bir düzeltme yönü ver. Önerilen biçim:
+
+```text
+### Bulunan kalıplar
+
+**Yapay içgörü girişi**
+> "Çoğu kişinin kaçırdığı nokta..."
+
+Düzeltme: Girişi kaldırıp iddiayı doğrudan söyle.
+
+**Önem şişirme**
+> "Bu gelişme sektör için kritik bir dönüm noktası..."
+
+Düzeltme: Neden önemli olduğunu somut bilgiyle göster veya nitelemeyi kaldır.
+```
+
+Hiçbir kalıp bulamazsan bunu açıkça söyle. Metni yeniden yazma, puan verme veya AI yazarlığı hakkında tahminde bulunma.
+
+### Düzenleme modu
+
+Önce tam düzenlenmiş metni ver. Ardından kısa bir **Neleri değiştirdim?** bölümü ekle. Bu bölüm yalnızca önemli müdahaleleri özetlesin; her küçük noktalama değişikliğini listeleme.
+
+Metin zaten doğal ve güçlü ise sırf çıktı formatını doldurmak için değişiklik yapma. Gerekirse “Metin zaten doğal; anlamlı bir değişiklik yapmadım.” de.
 
 ## İş akışı
 
