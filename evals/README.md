@@ -164,13 +164,13 @@ python scripts/eval_runner.py validate
 python scripts/eval_runner.py self-test
 codex login
 codex login status # ChatGPT ile giriş yapıldığını doğrulayın
-python scripts/eval_runner.py run --model MODEL_ID --output eval-results/outputs.jsonl
+python scripts/eval_runner.py run --output eval-results/outputs.jsonl
 python scripts/eval_runner.py grade --output eval-results/outputs.jsonl --report eval-results/report.json
 ```
 
-Yerelde varsayılan sağlayıcı `codex`'tir: ChatGPT Pro/Plus oturumunuzla açtığınız Codex CLI üzerinden `codex exec` çalıştırır; API anahtarı veya ayrı API faturalaması gerekmez. CLI ve oturumun bilgisayarınızda kurulmuş olması gerekir. `MODEL_ID`, `codex exec --model` için hesabınızda erişilebilir sabit bir model kimliğidir. Her vaka izole, geçici bir dizinde, salt okunur sandbox'ta ve ek araç kullanmama talimatıyla çalışır. Bu yol GitHub Actions üzerinde ChatGPT oturum belirteci saklamaz. ChatGPT kullanım limitleri geçerlidir.
+Yerelde varsayılan sağlayıcı `codex`'tir: ChatGPT Pro/Plus oturumunuzla açtığınız Codex CLI üzerinden `codex exec` çalıştırır; API anahtarı veya ayrı API faturalaması gerekmez. CLI ve oturumun bilgisayarınızda kurulmuş olması gerekir. `--model` atlanırsa CLI hesabınıza uygun önerilen modeli seçer; özellikle yeni modellerin erişimi hesaba ve dağıtım aşamasına bağlı olabilir. Erişebildiğiniz sabit bir model kimliğini biliyorsanız `--model MODEL_ID` ekleyebilirsiniz. Her vaka izole, geçici bir dizinde, salt okunur sandbox'ta ve ek araç kullanmama talimatıyla çalışır. Bu yol GitHub Actions üzerinde ChatGPT oturum belirteci saklamaz. ChatGPT kullanım limitleri geçerlidir.
 
-`run`, gerçek skill talimatlarını ve `eval.md` dosyasını modele gönderir; sağlayıcıyı, istenen model kimliğini, API yanıtı veya Codex oturum kimliğini, zamanı, corpus/skill parmak izini ve çıktıyı her vaka için JSONL'ye yazar. Codex CLI dönen kesin model revizyonunu bildirmiyorsa `model` alanı istenen kimliktir. Aynı sağlayıcı, model ve parmak iziyle kesilen çalışmayı devam ettirir; sürüm değişmişse yeni dosya gerekir. Çıktılar kullanıcı metinlerini de içerebilir; artifact erişimini buna göre yönetin. Bir model çağrısında hata oluşursa eldeki kayıtlar korunur ve iş başarısız olur.
+`run`, gerçek skill talimatlarını ve `eval.md` dosyasını modele gönderir; sağlayıcıyı, istenen model kimliğini, API yanıtı veya Codex oturum kimliğini, zamanı, corpus/skill parmak izini ve çıktıyı her vaka için JSONL'ye yazar. `--model` atlandığında model alanı `codex-recommended` olur: CLI'ın seçtiği kesin model revizyonu bu akışta kaydedilmez ve sonraki CLI güncellemelerinde değişebilir. Bu nedenle ilk keşif çalışmasından sonra v1.0 regresyon baseline'ı için erişilebilir sabit bir model seçin. Aynı sağlayıcı, model tercihi ve parmak iziyle kesilen çalışmayı devam ettirir; sürüm değişmişse yeni dosya gerekir. Çıktılar kullanıcı metinlerini de içerebilir; artifact erişimini buna göre yönetin. Bir model çağrısında hata oluşursa eldeki kayıtlar korunur ve iş başarısız olur.
 
 İlk çağrı başarısız olursa runner, Codex JSON olaylarındaki hata nedenini gösterir. Hiç vaka kaydedilmediyse `grade` rapor üretemez; önce `run` hatasını giderip aynı komutu tekrarlayın. Hata model erişimiyle ilgiliyse `codex exec --model MODEL_ID 'Merhaba de'` ile model kimliğini yerelde sınayın.
 
