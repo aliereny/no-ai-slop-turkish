@@ -8,7 +8,10 @@ import hashlib
 import json
 import os
 import re
+import shutil
+import subprocess
 import sys
+import tempfile
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -96,14 +99,71 @@ def api_call(model, instructions, user_text):
     return '\n'.join(texts), value.get('model', model), value.get('id')
 
 
+def parse_codex_events(output):
+    messages = []
+    thread_id = None
+    completed = False
+    for line in output.splitlines():
+        event = json.loads(line)
+        if event.get('type') == 'thread.started':
+            thread_id = event.get('thread_id')
+        elif event.get('type') == 'item.completed' and event.get('item', {}).get('type') == 'agent_message':
+            messages.append(event['item']['text'])
+        elif event.get('type') == 'turn.completed':
+            completed = True
+    if not completed or not messages or not messages[-1].strip() or not thread_id:
+        raise ValueError('Codex did not return a completed text answer')
+    return messages[-1], thread_id
+
+
+def codex_environment():
+    environment = os.environ.copy()
+    # Prevent ambient API credentials from silently billing a different account.
+    environment.pop('OPENAI_API_KEY', None)
+    environment.pop('CODEX_API_KEY', None)
+    return environment
+
+
+def check_chatgpt_login():
+    executable = shutil.which('codex')
+    if not executable:
+        raise ValueError('Codex CLI is required: install it and run `codex login` with ChatGPT')
+    result = subprocess.run([executable, 'login', 'status'], text=True, capture_output=True,
+                            timeout=30, check=False, env=codex_environment())
+    if result.returncode or 'chatgpt' not in (result.stdout + result.stderr).casefold():
+        raise ValueError('Codex CLI must be signed in with ChatGPT; run `codex login` and check `codex login status`')
+
+
+def codex_call(model, instructions, user_text, sandbox_dir):
+    executable = shutil.which('codex')
+    if not executable:
+        raise ValueError('Codex CLI is required: install it and run `codex login` with ChatGPT')
+    command = [executable, 'exec', '--json', '--ephemeral', '--sandbox', 'read-only',
+               '--ignore-user-config', '--ignore-rules', '--skip-git-repo-check',
+               '--model', model, '-']
+    prompt_text = (f'{instructions}\n\nBu tek eval vakasını yukarıdaki skill kurallarına göre yanıtla. '
+                   'Dosya okuma, araç çağırma veya dış bilgi kullanma. Yalnızca kullanıcıya verilecek son yanıtı üret.\n\n'
+                   f'{user_text}')
+    # No repository files or auth material are copied into this isolated working directory.
+    with tempfile.TemporaryDirectory(dir=sandbox_dir) as directory:
+        result = subprocess.run(command, input=prompt_text, text=True, capture_output=True,
+                                cwd=directory, timeout=300, check=False, env=codex_environment())
+    if result.returncode:
+        raise RuntimeError(f'Codex exited {result.returncode}: {result.stderr[-1200:]}')
+    answer, thread_id = parse_codex_events(result.stdout)
+    return answer, model, thread_id
+
+
 def fingerprint():
     return hashlib.sha256(SKILL.read_bytes() + EVAL.read_bytes() + CORPUS.read_bytes() +
                           b''.join(p.read_bytes() for p in sorted(FIXTURES.glob('*.md')))).hexdigest()
 
 
 def run(args):
-    if not os.getenv('OPENAI_API_KEY'):
-        raise ValueError('OPENAI_API_KEY is required for live model output')
+    if args.provider == 'api' and not os.getenv('OPENAI_API_KEY'):
+        raise ValueError('OPENAI_API_KEY is required for the API provider')
+    if args.provider == 'codex':
+        check_chatgpt_login()
     data = validate()
     if not args.model or not args.output:
         raise ValueError('--model and --output are required')
@@ -114,16 +174,20 @@ def run(args):
     if destination.exists():
         for line in destination.read_text().splitlines():
             row = json.loads(line)
-            if row['fingerprint'] != current_hash or row['requested_model'] != args.model:
-                raise ValueError('Output file belongs to another corpus/skill/model; use a new file')
+            if (row['fingerprint'] != current_hash or row['requested_model'] != args.model
+                    or row.get('provider', 'api') != args.provider):
+                raise ValueError('Output file belongs to another corpus/skill/model/provider; use a new file')
             existing[row['id']] = row
     instructions = SKILL.read_text(encoding='utf-8') + '\n\n' + EVAL.read_text(encoding='utf-8')
     with destination.open('a', encoding='utf-8') as stream:
         for case in data:
             if case['id'] in existing:
                 continue
-            answer, resolved_model, response_id = api_call(args.model, instructions, prompt(case))
-            record = {'id': case['id'], 'fingerprint': current_hash,
+            if args.provider == 'codex':
+                answer, resolved_model, response_id = codex_call(args.model, instructions, prompt(case), destination.parent)
+            else:
+                answer, resolved_model, response_id = api_call(args.model, instructions, prompt(case))
+            record = {'id': case['id'], 'fingerprint': current_hash, 'provider': args.provider,
                       'requested_model': args.model, 'model': resolved_model,
                       'response_id': response_id, 'at': dt.datetime.now(dt.timezone.utc).isoformat(),
                       'output': answer}
@@ -204,6 +268,16 @@ def self_test():
     assert 'missing PAT-06' in grade_case(positive, 'Hiçbir kalıp yok.')[0]
     edit = {'mode': 'edit', 'expect': {'must_change': ['Boş giriş'], 'must_preserve': ['42']}}
     assert grade_case(edit, 'Boş giriş ve 42')[0] == ['unchanged: Boş giriş']
+    events = ('{"type":"thread.started","thread_id":"t-1"}\n'
+              '{"type":"item.completed","item":{"type":"agent_message","text":"Merhaba"}}\n'
+              '{"type":"turn.completed"}\n')
+    assert parse_codex_events(events) == ('Merhaba', 't-1')
+    try:
+        parse_codex_events(events.replace('turn.completed', 'turn.failed'))
+    except ValueError:
+        pass
+    else:
+        raise AssertionError('Incomplete Codex turn was accepted')
     print('Runner self-test passed')
 
 
@@ -213,6 +287,8 @@ def main():
     subs.add_parser('validate')
     subs.add_parser('self-test')
     runner = subs.add_parser('run')
+    runner.add_argument('--provider', choices=('codex', 'api'), default='codex',
+                        help='Local ChatGPT subscription via Codex CLI (default), or Responses API')
     runner.add_argument('--model', required=True, help='Pin a specific model ID')
     runner.add_argument('--output', required=True, help='JSONL transcript; resumes matching runs')
     grader = subs.add_parser('grade')

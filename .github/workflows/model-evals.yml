@@ -27,7 +27,7 @@ jobs:
           MODEL: ${{ inputs.model }}
         run: |
           test -n "$OPENAI_API_KEY" || { echo 'OPENAI_API_KEY repository secret is required'; exit 1; }
-          python scripts/eval_runner.py run --model "$MODEL" --output eval-results/outputs.jsonl
+          python scripts/eval_runner.py run --provider api --model "$MODEL" --output eval-results/outputs.jsonl
       - name: Ön değerlendirmeyi kaydet
         run: python scripts/eval_runner.py grade --output eval-results/outputs.jsonl --report eval-results/report.json > /dev/null
       - name: Sonuçları inceleme için yükle

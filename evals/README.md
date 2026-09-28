@@ -162,11 +162,17 @@ Bir pattern davranışı bilinçli olarak değiştiriliyorsa ilgili corpus vakal
 ```sh
 python scripts/eval_runner.py validate
 python scripts/eval_runner.py self-test
-OPENAI_API_KEY=... python scripts/eval_runner.py run --model MODEL_ID --output eval-results/outputs.jsonl
+codex login
+codex login status # ChatGPT ile giriş yapıldığını doğrulayın
+python scripts/eval_runner.py run --model MODEL_ID --output eval-results/outputs.jsonl
 python scripts/eval_runner.py grade --output eval-results/outputs.jsonl --report eval-results/report.json
 ```
 
-`run`, gerçek skill talimatlarını ve `eval.md` dosyasını modele gönderir; istenen ve dönen model kimliğini, yanıt kimliğini, zamanı, corpus/skill parmak izini ve çıktıyı her vaka için JSONL'ye yazar. Aynı model ve aynı parmak iziyle kesilen çalışmayı devam ettirir; sürüm değişmişse yeni dosya gerekir. Çıktılar kullanıcı metinlerini de içerebilir; artifact erişimini buna göre yönetin. Bir model çağrısında hata oluşursa eldeki kayıtlar korunur ve iş başarısız olur.
+Yerelde varsayılan sağlayıcı `codex`'tir: ChatGPT Pro/Plus oturumunuzla açtığınız Codex CLI üzerinden `codex exec` çalıştırır; API anahtarı veya ayrı API faturalaması gerekmez. CLI ve oturumun bilgisayarınızda kurulmuş olması gerekir. `MODEL_ID`, `codex exec --model` için hesabınızda erişilebilir sabit bir model kimliğidir. Her vaka izole, geçici bir dizinde, salt okunur sandbox'ta ve ek araç kullanmama talimatıyla çalışır. Bu yol GitHub Actions üzerinde ChatGPT oturum belirteci saklamaz. ChatGPT kullanım limitleri geçerlidir.
+
+`run`, gerçek skill talimatlarını ve `eval.md` dosyasını modele gönderir; sağlayıcıyı, istenen model kimliğini, API yanıtı veya Codex oturum kimliğini, zamanı, corpus/skill parmak izini ve çıktıyı her vaka için JSONL'ye yazar. Codex CLI dönen kesin model revizyonunu bildirmiyorsa `model` alanı istenen kimliktir. Aynı sağlayıcı, model ve parmak iziyle kesilen çalışmayı devam ettirir; sürüm değişmişse yeni dosya gerekir. Çıktılar kullanıcı metinlerini de içerebilir; artifact erişimini buna göre yönetin. Bir model çağrısında hata oluşursa eldeki kayıtlar korunur ve iş başarısız olur.
+
+API ile çalıştırmak isterseniz `OPENAI_API_KEY=... python scripts/eval_runner.py run --provider api --model MODEL_ID --output eval-results/api-outputs.jsonl` komutunu kullanın. Bu ayrı API kullanımına tabidir.
 
 `grade` tespit başlıklarındaki kalıp adlarını `SKILL.md` içindeki 28 kalıbın sırasıyla eşler; beklenen/beklenmeyen bulguları ve düzenlemedeki birebir kalan sorunlu ifadeleri kontrol eder. Alıntının uygunluğu, gerçek yanlış pozitifler, anlam, üslup, yeni iddia ve uzun metin oracle'ları insan incelemesi ister. Otomatik kontrol geçse bile durum `review` kalır. `scope` vakaları da ana anlatım diline göre elle değerlendirilir. Başlıksız veya farklı adlandırılmış bulgular ayrıca incelenmelidir.
 
@@ -178,4 +184,4 @@ python scripts/eval_runner.py grade --output eval-results/outputs.jsonl --review
 
 `--strict`, 148 vakanın tamamında gerekçeli insan onayı ve sıfır otomatik hata ister; `fail`, `review` veya `pending` varsa sıfırdan farklı çıkar. Bu eşik v1.0 için önerilen kalite kapısıdır. Hataları vaka ID'siyle düzeltip aynı modeli ve tüm corpus'u tekrar çalıştırın. CI yalnızca corpus sözleşmesini ve runner mantığını ağsız doğrular; canlı sonuçları varmış gibi göstermez.
 
-GitHub'daki **Model eval baseline** workflow'u için depoya `OPENAI_API_KEY` secret'ı ekleyip elle sabit bir model kimliğiyle çalıştırın. Transcript ve ön rapor Actions artifact'ı olarak saklanır; gizli anahtar yazdırılmaz. Son insan incelemesi yerel `--review` ile tamamlanır.
+GitHub'daki **Model eval baseline** workflow'u isteğe bağlı API yoludur; bunun için depoya `OPENAI_API_KEY` secret'ı eklemek gerekir. Genel/açık kaynak GitHub runner'ına ChatGPT oturum dosyanızı veya belirtecinizi koymayın. Pro aboneliğinizle test için yukarıdaki yerel Codex yolunu kullanın. Son insan incelemesi yerel `--review` ile tamamlanır.
