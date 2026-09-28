@@ -158,8 +158,10 @@ def codex_call(model, instructions, user_text, sandbox_dir):
     if not executable:
         raise ValueError('Codex CLI is required: install it and run `codex login` with ChatGPT')
     command = [executable, 'exec', '--json', '--ephemeral', '--sandbox', 'read-only',
-               '--ignore-user-config', '--ignore-rules', '--skip-git-repo-check',
-               '--model', model, '-']
+               '--ignore-user-config', '--ignore-rules', '--skip-git-repo-check']
+    if model:
+        command.extend(['--model', model])
+    command.append('-')
     prompt_text = (f'{instructions}\n\nBu tek eval vakasını yukarıdaki skill kurallarına göre yanıtla. '
                    'Dosya okuma, araç çağırma veya dış bilgi kullanma. Yalnızca kullanıcıya verilecek son yanıtı üret.\n\n'
                    f'{user_text}')
@@ -173,7 +175,7 @@ def codex_call(model, instructions, user_text, sandbox_dir):
         answer, thread_id = parse_codex_events(result.stdout)
     except (ValueError, json.JSONDecodeError) as exc:
         raise RuntimeError(f'{exc}: {codex_diagnostics(result.stdout, result.stderr)}') from exc
-    return answer, model, thread_id
+    return answer, model or 'codex-recommended', thread_id
 
 
 def fingerprint():
@@ -186,9 +188,10 @@ def run(args):
         raise ValueError('OPENAI_API_KEY is required for the API provider')
     if args.provider == 'codex':
         check_chatgpt_login()
+    if args.provider == 'api' and not args.model:
+        raise ValueError('--model is required for the API provider')
     data = validate()
-    if not args.model or not args.output:
-        raise ValueError('--model and --output are required')
+    requested_model = args.model or 'codex-recommended'
     destination = Path(args.output)
     destination.parent.mkdir(parents=True, exist_ok=True)
     current_hash = fingerprint()
@@ -196,7 +199,7 @@ def run(args):
     if destination.exists():
         for line in destination.read_text().splitlines():
             row = json.loads(line)
-            if (row['fingerprint'] != current_hash or row['requested_model'] != args.model
+            if (row['fingerprint'] != current_hash or row['requested_model'] != requested_model
                     or row.get('provider', 'api') != args.provider):
                 raise ValueError('Output file belongs to another corpus/skill/model/provider; use a new file')
             existing[row['id']] = row
@@ -209,7 +212,7 @@ def run(args):
         else:
             answer, resolved_model, response_id = api_call(args.model, instructions, prompt(case))
         record = {'id': case['id'], 'fingerprint': current_hash, 'provider': args.provider,
-                  'requested_model': args.model, 'model': resolved_model,
+                  'requested_model': requested_model, 'model': resolved_model,
                   'response_id': response_id, 'at': dt.datetime.now(dt.timezone.utc).isoformat(),
                   'output': answer}
         with destination.open('a', encoding='utf-8') as stream:
@@ -315,7 +318,7 @@ def main():
     runner = subs.add_parser('run')
     runner.add_argument('--provider', choices=('codex', 'api'), default='codex',
                         help='Local ChatGPT subscription via Codex CLI (default), or Responses API')
-    runner.add_argument('--model', required=True, help='Pin a specific model ID')
+    runner.add_argument('--model', help='Pin a supported model ID; omit for Codex CLI recommended model')
     runner.add_argument('--output', required=True, help='JSONL transcript; resumes matching runs')
     grader = subs.add_parser('grade')
     grader.add_argument('--output', required=True)
