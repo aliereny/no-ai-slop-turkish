@@ -1,20 +1,20 @@
-# Upstream relationship
+# Upstream ile ilişki
 
-This repository is a Turkish-specific fork of [petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop).
+Bu depo, [petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop) projesinin Türkçeye özel bir fork'udur.
 
-## Current baseline
+## Mevcut taban
 
-- Upstream repository: `petergyang/no-ai-slop`
-- Baseline commit: `000650b156983f5159695b441477f4e63b25dc85`
-- Fork repository: `aliereny/no-ai-slop-turkish`
+- Upstream deposu: `petergyang/no-ai-slop`
+- Takip edilen taban commit: `000650b156983f5159695b441477f4e63b25dc85`
+- Fork deposu: `aliereny/no-ai-slop-turkish`
 
-## Parallelism contract
+## Paralellik sözleşmesi
 
-1. Keep the high-level upstream repository layout, plugin packaging flow, and release workflow parallel where practical.
-2. Use `no-ai-slop-turkish` as the plugin/package identity.
-3. Use `no-ai-slop-tr` as the skill identity and `/no-ai-slop-tr` as the user-facing command.
-4. Scope the skill to predominantly Turkish writing. Non-Turkish input should not run the edit/detect workflow.
-5. Port future upstream behavior changes semantically rather than overwriting Turkish-specific rules.
-6. Preserve the upstream MIT license and attribution.
+1. Upstream'in üst seviye repo yapısını, plugin paketleme akışını ve release workflow'unu pratik olduğu ölçüde paralel tut.
+2. Plugin/paket kimliği olarak `no-ai-slop-turkish` kullan.
+3. Skill kimliği olarak `no-ai-slop-tr`, kullanıcıya dönük komut olarak `/no-ai-slop-tr` kullan.
+4. Skill'i ağırlıklı olarak Türkçe yazılarla sınırla. Türkçe olmayan girdilerde düzenleme/tespit iş akışını çalıştırma.
+5. Gelecekteki upstream davranış değişikliklerini Türkçeye özgü kuralların üzerine yazmak yerine anlamsal olarak uyarla.
+6. Upstream MIT lisansını ve attribution bilgisini koru.
 
-The Turkish slop taxonomy, examples, and eval criteria are maintained as language-specific content and may intentionally diverge from upstream.
+Türkçe slop taksonomisi, örnekleri ve değerlendirme ölçütleri dile özgü içerik olarak ayrı sürdürülür ve gerektiğinde upstream'den bilinçli biçimde ayrışabilir.

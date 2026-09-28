@@ -129,6 +129,18 @@ Davranışsal regresyon corpus'u [evals/](evals/) altında tutulur. Corpus, 28 k
 - [scripts/build_plugin.py](scripts/build_plugin.py): plugin paketleme ve doğrulama
 - [UPSTREAM.md](UPSTREAM.md): upstream senkronizasyon notları
 
+## Geliştirme kontrolleri
+
+PR açmadan önce Türkçe kullanıcı yüzeyi ve plugin paketi yerelde doğrulanabilir:
+
+~~~sh
+python scripts/check_turkish_surface.py --self-test
+python scripts/check_turkish_surface.py
+python scripts/build_plugin.py --check
+~~~
+
+`check_turkish_surface.py`, eski skill kimliklerinin veya upstream'den kalan İngilizce kullanıcı arayüzü ifadelerinin Türkçe yüzeye sızmasını engeller. Ayrıca plugin manifest kimliğini ve iki `openai.yaml` dosyasının birebir aynı kalmasını denetler. GitHub Actions aynı kontrolleri her pull request ve `main` push'unda otomatik çalıştırır.
+
 ## Upstream ile ilişki
 
 Bu proje [petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop) tabanlı bağımsız bir Türkçe uyarlamadır. Upstream'in paketleme ve repo mimarisi mümkün olduğunca paralel tutulurken dil kuralları, değerlendirme sözleşmesi ve corpus Türkçe için ayrı geliştirilir.
