@@ -1,93 +1,145 @@
 # No AI Slop Türkçe
 
-Türkçe yazılardaki AI klişelerini azaltırken yazarın kişisel sesini koruyan, [No AI Slop](https://github.com/petergyang/no-ai-slop) tabanlı Türkçe fork.
+Türkçe metinlerdeki AI slop kalıplarını azaltırken yazarın kişisel sesini koruyan bir düzenleme ve tespit skill'i.
 
-## Language scope
+[petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop) tabanlıdır; ancak İngilizce kuralların birebir çevirisi değildir. Türkçenin sözdizimi, resmiyet kipleri, edilgenlik kullanımı, bürokratik anlatımı ve çeviri kokan cümle yapılarına göre yeniden tasarlanmıştır.
 
-This fork is scoped to Turkish writing. The package, skill identity, Turkish-native slop taxonomy, and self-eval are Turkish-specific. A broader example-based behavioral eval corpus is planned separately.
+## Ne işe yarıyor?
 
-https://github.com/user-attachments/assets/f3055450-78eb-4672-880a-88a4fa54bde9
+No AI Slop Türkçe iki modda çalışır:
 
-## Problem
+- **Düzenle:** Metindeki mekanik, şişirilmiş veya yapay duran kalıpları temizlerken anlamı, somut ayrıntıları ve yazarın kişisel sesini korur.
+- **Tespit et:** Metni yeniden yazmadan hangi tanımlı kalıpların bulunduğunu, kısa kanıtlarla ve düzeltme yönüyle bildirir.
 
-AI makes it easy to generate clean writing that all sounds the same. Even the best models keep producing lines like:
+Araç yalnızca ağırlıklı olarak Türkçe metinler için tasarlanmıştır. Kod, marka adı, ürün adı veya kısa yabancı dil alıntıları içeren Türkçe metinler kapsam içindedir.
 
-- “It’s not X. It’s Y.”
-- “What nobody tells you is…”
-- “The future isn’t coming. It’s already here.”
+## Neden Türkçe için ayrı bir sürüm?
 
-When you use AI to edit, it can also smooth away the vocabulary, cadence, humor, and imperfections that make the writing sound like you.
+Türkçedeki AI slop yalnızca İngilizce klişelerin çevrilmiş hâli değildir.
 
-## How to install No AI Slop Türkçe
+Türkçe metinlerde özellikle şu sorunlar farklı biçimde ortaya çıkar:
 
-The easiest way to install the skill is to paste this into ChatGPT, Claude Code, Codex, or your favorite coding agent:
+- gereksiz resmî kipler ve sürekli “-maktadır/-mektedir” kullanımı,
+- “inceleme gerçekleştirmek” gibi bürokratik isimleştirmeler,
+- aktörü gereksiz yere gizleyen edilgen yapılar,
+- “Bu bağlamda”, “Bununla birlikte”, “Öte yandan” gibi mekanik geçişler,
+- “karşımıza çıkıyor”, “öne çıkıyor”, “gözler önüne seriyor” gibi gözlem ve yorum dolguları,
+- İngilizce cümle iskeletinin Türkçe kelimelerle korunması,
+- “araç / çözüm / platform / sistem” gibi gereksiz eş anlamlı döndürme.
 
-```text
-Install the /no-ai-slop-tr skill globally from https://github.com/aliereny/no-ai-slop-turkish
-```
+Bu repo bu davranışları Türkçenin kendi bağlamında değerlendirir. Aynı yüzey biçimini her zaman hata saymaz; gerçek karşıtlık, akademik resmiyet, işlevsel edilgenlik veya doğal teknik jargon gibi meşru kullanımları korumaya çalışır.
 
-You can also install it with `npx`:
+## Kurulum
 
-```sh
+### ChatGPT, Codex veya uyumlu bir coding agent
+
+Aşağıdaki isteği yapıştırın:
+
+~~~text
+https://github.com/aliereny/no-ai-slop-turkish deposundaki /no-ai-slop-tr skill'ini global olarak kur.
+~~~
+
+### npx
+
+~~~sh
 npx skills add aliereny/no-ai-slop-turkish --skill no-ai-slop-tr --global --yes
-```
+~~~
 
-## How to use No AI Slop Türkçe
+## Kullanım
 
-### Edit your writing
+### Metni düzenleme
 
-```text
-/no-ai-slop-tr (your writing)
-```
+~~~text
+/no-ai-slop-tr
 
-The skill removes the AI slop patterns, preserves your personal voice, and lists what it changed.
+Bu metni düzenle:
 
-### Detect slop
+(metniniz)
+~~~
 
-```text
-/no-ai-slop-tr is this slop? (your writing)
-```
+Skill gereken en küçük etkili müdahaleyi yapar ve tam düzenlenmiş metnin ardından kısa bir **Neleri değiştirdim?** bölümü verir.
 
-The skill quotes every slop pattern it found without guessing whether AI wrote the text.
+### AI slop tespiti
 
-### Generate slop for fun
+~~~text
+/no-ai-slop-tr
 
-```text
-Draft an AI slop post about (topic)
-```
+Bu metindeki AI slop kalıplarını tespit et:
 
-Use it to generate the most cringe AI slop possible as satire.
+(metniniz)
+~~~
 
-## The slop that this skill catches
+Tespit modunda metin yeniden yazılmaz. Her bulgu tanımlı kalıp adıyla, kısa bir alıntıyla ve düzeltme yönüyle verilir.
 
-No AI Slop checks for 20+ patterns, including:
+## Örnek
 
-1. **Binary contrasts.** “It’s not X. It’s Y.”
-2. **Throat-clearing openers.** “Here’s the thing,” “Let me be clear”
-3. **Faux-insight setups.** “What nobody tells you,” “The part everyone misses”
-4. **Colon reveals.** “The best part: it learns.”
-5. **Dramatic fragments.** “That’s it. That’s the whole thing.”
-6. **Superficial analysis.** “highlighting the team’s commitment to innovation”
-7. **Importance puffery.** “marks a pivotal moment,” “a testament to”
-8. **Weasel attribution.** “experts agree,” “studies show”
-9. **Synonym cycling.** “The agent handles your email. The assistant drafts replies.”
-10. **Fake-profound endings.** “The future isn’t coming. It’s already here.”
+### Önce
 
-It also checks the fundamentals: Lead with the point when that helps, use active voice, untangle hard-to-follow sentences, and prefer concrete details over abstractions.
+> Bu bağlamda, yeni önbellek sistemi sayfaların daha hızlı yüklenmesini mümkün hale getiriyor. Bununla birlikte sistem, kullanıcı deneyiminin iyileştirilmesi açısından önemli bir rol oynuyor.
 
-## What’s inside
+### Sonra
 
-- [`SKILL.md`](skills/no-ai-slop-tr/SKILL.md) contains the editing rules and workflow.
-- [`eval.md`](skills/no-ai-slop-tr/eval.md) contains the checks the skill runs on its work.
-- [`.codex-plugin/plugin.json`](.codex-plugin/plugin.json) contains the ChatGPT and Codex plugin metadata.
-- [`build_plugin.py`](scripts/build_plugin.py) builds and validates the plugin package.
+> Yeni önbellek sistemiyle sayfalar daha hızlı yükleniyor.
 
-No AI Slop Türkçe is packaged as a ChatGPT and Codex plugin.
+Bu örnekte gereksiz geçiş ifadeleri, “mümkün hale getirmek” zinciri ve somut bilgi taşımayan önem şişirmesi temizlenir. Kaynakta olmayan yeni bir neden, sayı veya sonuç eklenmez.
 
-## Upstream
+## Hangi kalıpları yakalıyor?
 
-Based on [petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop), licensed under MIT.
+Skill şu anda 28 kalıbı değerlendirir. Bunların bir bölümü genel AI yazım davranışlarının Türkçe karşılıkları, bir bölümü ise Türkçeye özgü yapılardır.
 
-## License
+| Grup | Örnek kalıplar |
+| --- | --- |
+| Yapay vurgu ve giriş | Sahte karşıtlık, konuya girmeyi geciktiren girişler, yapay içgörü girişleri, iki noktayla dramatik açıklama |
+| Şişirme ve yorum | Göstermeden yorumlayan analiz, önem şişirme, okuru yönlendiren üst-anlatım, belirsiz kaynak gösterme |
+| Türkçeye özgü bürokratik dil | Bürokratik isimleştirme, edilgenlik sislemesi, soyut isim yığılması, resmî kip otomatiği |
+| Mekanik Türkçe | Mekanik geçiş bağlaçları, gösterici zamir zinciri, yapay gözlem dili, çeviri kokan cümle iskeleti |
+| Ritim ve kapanış | Gereksiz eş anlamlı döndürme, dramatik parçalama, robotik ritim, retorik kurulumlar, yapay vurucu kapanış |
+| Biçim | Gereksiz özet-tekrar kapanışları, biçimlendirme slop'u, dekoratif uzun çizgi kullanımı |
 
-MIT
+Tam kalıp listesi, karar kuralları ve örnekler için [SKILL.md](skills/no-ai-slop-tr/SKILL.md) dosyasına bakın.
+
+## Ne yapmaz?
+
+No AI Slop Türkçe:
+
+- bir metnin AI tarafından yazılıp yazılmadığını tahmin etmez,
+- “%87 AI” gibi bir skor üretmez,
+- her uzun veya resmî cümleyi kötü saymaz,
+- “Bu bağlamda” veya “-maktadır” gibi yüzey biçimlerini bağlamdan bağımsız yasaklamaz,
+- metni tek tip, kurumsal veya steril Türkçeye dönüştürmez,
+- kaynak metinde bulunmayan iddia, istatistik, örnek, aktör veya gerekçe uydurmaz,
+- Türkçe olmayan bir metni kullanıcı açıkça istemedikçe çevirmeye veya Türkçe kurallarla düzenlemeye çalışmaz.
+
+## Nasıl çalışıyor?
+
+Ana davranış sözleşmesi iki dosyada tanımlanır:
+
+- [SKILL.md](skills/no-ai-slop-tr/SKILL.md): düzenleme ilkeleri, iki çalışma modu ve 28 kalıbın karar kuralları,
+- [eval.md](skills/no-ai-slop-tr/eval.md): anlam korunumu, kişisel ses, Türkçe doğallık, false-positive kontrolü ve çıktı sözleşmesi için kalite kapısı.
+
+Davranışsal regresyon corpus'u [evals/](evals/) altında tutulur. Corpus, 28 kalıp için pozitif ve zor negatif örneklerin yanı sıra çakışma, dil kapsamı ve kalite vakalarını içerir. Uzun metin fixture'ları kişisel ses, teknik jargon, akademik kayıt, hukukî resmiyet ve benzeri bütünsel davranışları test eder.
+
+## Repo yapısı
+
+- [skills/no-ai-slop-tr/SKILL.md](skills/no-ai-slop-tr/SKILL.md): ana skill tanımı
+- [skills/no-ai-slop-tr/eval.md](skills/no-ai-slop-tr/eval.md): self-eval kalite kapısı
+- [evals/cases.jsonl](evals/cases.jsonl): atomik davranışsal regresyon vakaları
+- [evals/fixtures/long-form/](evals/fixtures/long-form/): uzun metin testleri
+- [.codex-plugin/plugin.json](.codex-plugin/plugin.json): ChatGPT ve Codex plugin metadata'sı
+- [scripts/build_plugin.py](scripts/build_plugin.py): plugin paketleme ve doğrulama
+- [UPSTREAM.md](UPSTREAM.md): upstream senkronizasyon notları
+
+## Upstream ile ilişki
+
+Bu proje [petergyang/no-ai-slop](https://github.com/petergyang/no-ai-slop) tabanlı bağımsız bir Türkçe uyarlamadır. Upstream'in paketleme ve repo mimarisi mümkün olduğunca paralel tutulurken dil kuralları, değerlendirme sözleşmesi ve corpus Türkçe için ayrı geliştirilir.
+
+Upstream senkronizasyon yaklaşımı ve takip edilen commit bilgisi için [UPSTREAM.md](UPSTREAM.md) dosyasına bakın.
+
+## Gizlilik ve kullanım koşulları
+
+- [Gizlilik](PRIVACY.md)
+- [Kullanım Koşulları](TERMS.md)
+
+## Lisans
+
+MIT. Orijinal telif ve lisans bildirimi [LICENSE](LICENSE) dosyasında korunur.

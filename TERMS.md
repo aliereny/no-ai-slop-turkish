@@ -1,9 +1,9 @@
-# Terms
+# Kullanım Koşulları
 
-No AI Slop Türkçe is an open-source writing workflow provided under the [MIT License](LICENSE).
+No AI Slop Türkçe, [MIT Lisansı](LICENSE) kapsamında sunulan açık kaynaklı bir yazım ve düzenleme aracıdır.
 
-The plugin suggests edits and flags writing patterns. You are responsible for reviewing its output before publishing or relying on it. It does not provide legal, medical, financial, or other professional advice.
+Plugin düzenleme önerileri sunar ve yazım kalıplarını işaretler. Çıktıları yayımlamadan veya bunlara dayanarak işlem yapmadan önce gözden geçirmek sizin sorumluluğunuzdadır. Hukuk, sağlık, finans veya başka bir alanda profesyonel danışmanlık sağlamaz.
 
-The software is provided as-is, without warranties or guarantees. Your use of ChatGPT, Codex, GitHub, or other services is also subject to those services' terms.
+Yazılım herhangi bir garanti veya güvence olmaksızın olduğu gibi sunulur. ChatGPT, Codex, GitHub veya diğer hizmetleri kullanımınız ayrıca bu hizmetlerin kendi koşullarına tabidir.
 
-Questions and project feedback: https://github.com/aliereny/no-ai-slop-turkish/issues
+Sorular ve proje geri bildirimleri: https://github.com/aliereny/no-ai-slop-turkish/issues

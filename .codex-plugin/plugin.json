@@ -1,7 +1,7 @@
 {
   "name": "no-ai-slop-turkish",
   "version": "0.1.0",
-  "description": "Türkçe yazılardaki AI klişelerini azaltırken yazarın kişisel sesini korur.",
+  "description": "Türkçe metinlerde AI slop kalıplarını azaltırken yazarın kişisel sesini korur.",
   "author": {
     "name": "aliereny",
     "url": "https://github.com/aliereny"
@@ -10,31 +10,30 @@
   "repository": "https://github.com/aliereny/no-ai-slop-turkish",
   "license": "MIT",
   "keywords": [
-    "writing",
-    "editing",
-    "voice",
-    "turkish",
+    "yazım",
+    "düzenleme",
+    "kişisel ses",
     "Türkçe",
     "AI slop"
   ],
   "skills": "./skills/",
   "interface": {
     "displayName": "No AI Slop Türkçe",
-    "shortDescription": "Türkçe AI klişelerini azalt",
-    "longDescription": "Türkçe metinlerde yapay zekâya özgü klişe ve mekanik yazım kalıplarını azaltırken yazarın kişisel sesini korur. Düzenleme ve tespit modlarını destekler. Bu ilk Türkçe fork sürümü paket ve skill kimliğini Türkçeye ayırır; Türkçeye özgü slop taksonomisi ayrı bir aşamada geliştirilecektir.",
+    "shortDescription": "Türkçe AI slop'u azalt",
+    "longDescription": "Türkçe metinlerde yapay zekâya özgü klişe, bürokratik, çeviri kokan ve mekanik yazım kalıplarını tespit eder veya düzenlerken yazarın kişisel sesini korur. Türkçeye özgü 28 kalıbı; anlam korunumu, doğal Türkçe, bağlama duyarlı false-positive kontrolü ve minimum müdahale ilkeleriyle değerlendirir.",
     "developerName": "aliereny",
     "category": "Productivity",
     "capabilities": [
       "Düzenle",
       "Tespit et",
-      "Yazarın sesini koru"
+      "Kişisel sesi koru"
     ],
     "websiteURL": "https://github.com/aliereny/no-ai-slop-turkish",
     "privacyPolicyURL": "https://github.com/aliereny/no-ai-slop-turkish/blob/main/PRIVACY.md",
     "termsOfServiceURL": "https://github.com/aliereny/no-ai-slop-turkish/blob/main/TERMS.md",
     "defaultPrompt": [
-      "(metin)",
-      "bu metinde AI slop var mı? (metin)"
+      "Bu metni doğal Türkçeyi ve kişisel sesimi koruyarak düzenle: (metin)",
+      "Bu metindeki AI slop kalıplarını tespit et: (metin)"
     ],
     "brandColor": "#D30800",
     "composerIcon": "./assets/no-ai-slop.png",
