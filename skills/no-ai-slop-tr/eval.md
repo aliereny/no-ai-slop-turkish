@@ -38,6 +38,9 @@ For detect requests, make sure the response names each pattern found with a quot
 7. Is decorative formatting slop removed, while formatting required by the user's channel or format is preserved?
 8. Are colons used for genuine structure such as lists, labels, quotations, or explanations rather than artificial dramatic reveals?
 9. Are em dashes treated contextually rather than by a numeric quota: decorative clusters are reduced, while uses that genuinely improve meaning or rhythm are preserved?
+10. Are the Turkish-native patterns handled contextually: mechanical transition markers, bureaucratic periphrasis, passive obscuring, enablement chains, abstract noun stacking, demonstrative-reference chains, formal-tense automation, triple marketing adjectives, artificial observation language, and translation-shaped sentence structures? Are genuine discourse relations, natural lexicalized compound verbs, functional passive voice, and tense/evidentiality nuances preserved?
+11. When pattern categories overlap, is each underlying issue reported only once using the most specific applicable category, while genuinely independent issues in the same sentence may still be reported separately?
+12. Do simplifications preserve the original proposition without inventing a new actor, result, causal relation, capability, or degree of certainty?
 
 ## Final read
 
