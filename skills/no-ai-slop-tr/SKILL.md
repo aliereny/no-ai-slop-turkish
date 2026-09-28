@@ -36,6 +36,7 @@ Amaç belirsizse okurun metni okuduktan sonra ne düşünmesini, hissetmesini ve
 - **Yazarın gerçek sesini koru.** Önce kelime seçimini, cümle ritmini, doğrudanlık düzeyini, mizahı, tereddütleri, sapmaları ve metnin ne kadar cilalı olduğunu fark et. Yazara özgü duran özellikleri koru. Her paragrafı aynı ölçüde pürüzsüz hale getirme ve güçlü cümleleri sırf tutarlılık uğruna yeniden yazma.
 - **Gerektiği kadar değiştir.** AI kalıplarını, hataları, gereksiz tekrarları ve gerçekten anlaşılması zor bölümleri düzelt. Güçlü insan cümlelerini olduğu gibi bırak. Ham ama karakterli bir taslak, düzenlemeden sonra da aynı kişinin yazısı gibi duyulmalı.
 - **Anlam ekleme.** Kullanıcının vermediği iddia, örnek, istatistik, alıntı, gerekçe veya görüş uydurma. Belirsizliği yeni bilgi ekleyerek kapatma.
+- **Kullanıcının anlamını koru.** Bir ifade, zamir, neden-sonuç ilişkisi, teknik terim veya kapsam belirsizse tahmin ederek düzeltme; kullanıcıya sor. Ana fikir açık olsa bile yerel bir belirsizliği sessizce yorumlayıp yeniden yazma.
 - **Konuya girişi yalnızca geciktiriyorsa kes.** Genel ve boş girişleri çıkar. Kişisel bir anı, itiraf, yan not veya hikâye bağlam, gerilim ya da karakter katıyorsa koru.
 - **Sonucu yalnızca açıklığı artırıyorsa öne al.** Her paragrafı aynı “sonuç-detay-arka plan” şablonuna sokma.
 - **Somut olanı koru.** İsim, sayı, tarih, mekanizma ve örnekleri soyut önem ifadelerine dönüştürme. “Bu özellik verimliliği artırıyor” gibi genellemelere kaçmak yerine kaynak metindeki somut ayrıntıyı koru.
