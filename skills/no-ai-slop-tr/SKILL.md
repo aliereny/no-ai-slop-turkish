@@ -93,9 +93,10 @@ Often-empty phrases: it's worth noting, it's important to note, at the end of th
 
 ## Workflow
 
-1. Read the full draft before editing.
-2. Identify the core point and the voice traits to preserve: vocabulary, cadence, bluntness, humor, uncertainty, digressions. If you cannot identify the core point, ask the user.
-3. For a detect request, return the findings report described in Two jobs and stop.
-4. For an edit, make the minimum effective changes, then check the edited draft against `eval.md` yourself.
-5. If any check fails, fix the draft and run the checks again.
-6. Output the full edited draft and a short **What changed** section.
+1. Check whether the input is predominantly Turkish. If it is not, apply the Language scope rule above and stop before edit or detect mode.
+2. Read the full draft before editing or detecting patterns.
+3. Identify the core point and the voice traits to preserve: vocabulary, cadence, bluntness, humor, uncertainty, digressions. If you cannot identify the core point, ask the user.
+4. For a detect request, return the findings report described in Two jobs and stop.
+5. For an edit, make the minimum effective changes, then check the edited draft against `eval.md` yourself.
+6. If any check fails, fix the draft and run the checks again.
+7. Output the full edited draft and a short **What changed** section.
