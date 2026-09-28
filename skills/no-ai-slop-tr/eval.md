@@ -48,6 +48,8 @@ Tespit modunda metni yeniden yazma. Bu modda düzenleme sonrası kontrolleri de�
 
 **VOICE-05 — Minimum müdahale.** Güçlü ve doğal cümleler sırf tutarlılık, kısalık veya “daha iyi yazılmış” görünmesi için yeniden yazılmış mı?
 
+**VOICE-06 — Müdahale ve kesme orantısı.** Yapılan değişiklik ve kesme miktarı metindeki gerçek slop, tekrar ve belirsizlikle orantılı mı? Ham ama karakterli ayrıntılar, sapmalar, ritim veya kişisel malzeme sırf metni daha kısa ve düzenli yapmak için agresif biçimde budanmamış olmalı.
+
 ## Genel düzenleme ilkeleri
 
 **EDIT-PRINCIPLE-01 — Konuya giriş.** Boş ve genel girişler kesilmiş; bağlam, gerilim veya karakter taşıyan kişisel girişler korunmuş mu?
@@ -65,6 +67,8 @@ Tespit modunda metni yeniden yazma. Bu modda düzenleme sonrası kontrolleri de�
 **EDIT-PRINCIPLE-07 — Göster, etiketleme.** Metin okura “önemli”, “şaşırtıcı”, “kritik” gibi etiketlerle ne düşüneceğini söylemek yerine mevcut olgu, eylem ve sonuçların bunu göstermesine izin veriyor mu?
 
 **EDIT-PRINCIPLE-08 — Bağlamsız yasak yok.** Zarflar, güçlendiriciler, geçiş ifadeleri veya resmî kipler yalnızca kelime listesinde göründükleri için mekanik biçimde silinmiş mi? İşlevsel olan kullanımlar korunmalı.
+
+**EDIT-PRINCIPLE-09 — Boş zarflar ve güçlendiriciler.** “oldukça”, “gerçekten”, “aslında”, “temelde”, “son derece”, “önemli ölçüde”, “özellikle” gibi ifadeler anlam, ton, karşıtlık veya yazarın doğal ritmine katkı sağlamıyorsa çıkarılmış mı? Gerçek vurgu veya nüans taşıyan kullanımlar korunmuş olmalı.
 
 ## Kalıp kontrolleri
 
@@ -170,13 +174,15 @@ Her kontrolde iki şeyi birlikte değerlendir: slop işlevi temizlenmiş mi ve a
 
 **OUT-DETECT-02 — Adlandırılmış kalıp.** Her bulgu, `SKILL.md` içinde tanımlı kalıp adlarından biriyle açıkça adlandırılmış mı?
 
-**OUT-DETECT-03 — Kanıt ve yön.** Her bulgu kısa bir ilgili alıntı ve tek cümlelik düzeltme yönü içeriyor mu?
+**OUT-DETECT-03 — Tespit kapsamı.** Girdide `SKILL.md` tarafından tanımlanan ve gerçekten uygulanabilir olan tüm kalıplar raporlanmış mı? Bir veya birkaç doğru bulgu vermek, metindeki diğer açık kalıpları atlamayı geçerli kılmaz.
 
-**OUT-DETECT-04 — Yazarlık iddiası yok.** Metnin AI tarafından yazıldığına dair tahmin, kesin hüküm veya “AI skoru” verilmemiş mi?
+**OUT-DETECT-04 — Kanıt ve yön.** Her bulgu kısa bir ilgili alıntı ve tek cümlelik düzeltme yönü içeriyor mu?
 
-**OUT-DETECT-05 — Puanlama yok.** Metin genel bir slop puanı, yüzdesi veya benzeri yapay nicel sonuçla değerlendirilmemiş mi?
+**OUT-DETECT-05 — Yazarlık iddiası yok.** Metnin AI tarafından yazıldığına dair tahmin, kesin hüküm veya “AI skoru” verilmemiş mi?
 
-**OUT-DETECT-06 — Bulgusuz durum.** Tanımlı bir kalıp yoksa bu açıkça söylenmiş ve sırf rapor dolsun diye bulgu icat edilmemiş mi?
+**OUT-DETECT-06 — Puanlama yok.** Metin genel bir slop puanı, yüzdesi veya benzeri yapay nicel sonuçla değerlendirilmemiş mi?
+
+**OUT-DETECT-07 — Bulgusuz durum.** Tanımlı bir kalıp yoksa bu açıkça söylenmiş ve sırf rapor dolsun diye bulgu icat edilmemiş mi?
 
 ## Son kontrol
 
