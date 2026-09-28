@@ -4,6 +4,11 @@ Use this after the rewrite. Answer each check with pass or fail. If any check fa
 
 For detect requests, make sure the response names each pattern found with a quoted line and a short fix, without rewriting the draft.
 
+## Language scope
+
+1. Before running edit or detect mode, is the input predominantly Turkish?
+2. If the input is not predominantly Turkish, did the response stop the edit/detect workflow, briefly state that the skill is scoped to Turkish text, and avoid rewriting, auditing, or translating the text unless translation was explicitly requested?
+
 ## Editing principles
 
 1. Does the edit preserve the user's point without adding claims, examples, stats, quotes, or opinions?

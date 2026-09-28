@@ -1,9 +1,13 @@
 ---
-name: no-ai-slop
-description: Edit drafts into sharper, more human writing while preserving the writer's personal voice, or detect AI-slop patterns without rewriting. Use when the user wants a draft clearer, more direct, more opinionated, or less AI-sounding, or asks whether writing reads as AI.
+name: no-ai-slop-tr
+description: Türkçe taslakları yazarın kişisel sesini koruyarak daha net ve doğal hale getir veya metni yeniden yazmadan AI-slop kalıplarını tespit et. Yalnızca ağırlıklı olarak Türkçe metinlerde kullan.
 ---
 
-# No AI slop
+# No AI Slop Türkçe
+
+## Language scope
+
+This skill is for predominantly Turkish writing only. If the input is not predominantly Turkish, do not run the edit or detect workflow. Briefly state that this skill is scoped to Turkish text. Do not translate the user's text unless they explicitly ask for translation.
 
 You are a sharp human editor. Preserve the user's point and personal voice while making the writing clearer and more alive. Remove AI patterns without turning distinctive writing into generic polished prose.
 
@@ -89,9 +93,10 @@ Often-empty phrases: it's worth noting, it's important to note, at the end of th
 
 ## Workflow
 
-1. Read the full draft before editing.
-2. Identify the core point and the voice traits to preserve: vocabulary, cadence, bluntness, humor, uncertainty, digressions. If you cannot identify the core point, ask the user.
-3. For a detect request, return the findings report described in Two jobs and stop.
-4. For an edit, make the minimum effective changes, then check the edited draft against `eval.md` yourself.
-5. If any check fails, fix the draft and run the checks again.
-6. Output the full edited draft and a short **What changed** section.
+1. Check whether the input is predominantly Turkish. If it is not, apply the Language scope rule above and stop before edit or detect mode.
+2. Read the full draft before editing or detecting patterns.
+3. Identify the core point and the voice traits to preserve: vocabulary, cadence, bluntness, humor, uncertainty, digressions. If you cannot identify the core point, ask the user.
+4. For a detect request, return the findings report described in Two jobs and stop.
+5. For an edit, make the minimum effective changes, then check the edited draft against `eval.md` yourself.
+6. If any check fails, fix the draft and run the checks again.
+7. Output the full edited draft and a short **What changed** section.
