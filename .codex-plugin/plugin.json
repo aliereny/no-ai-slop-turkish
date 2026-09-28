@@ -19,7 +19,7 @@
   "skills": "./skills/",
   "interface": {
     "displayName": "No AI Slop Türkçe",
-    "shortDescription": "Türkçe AI slop kalıplarını azalt",
+    "shortDescription": "Türkçe AI slop'u azalt",
     "longDescription": "Türkçe metinlerde yapay zekâya özgü klişe, bürokratik, çeviri kokan ve mekanik yazım kalıplarını tespit eder veya düzenlerken yazarın kişisel sesini korur. Türkçeye özgü 28 kalıbı; anlam korunumu, doğal Türkçe, bağlama duyarlı false-positive kontrolü ve minimum müdahale ilkeleriyle değerlendirir.",
     "developerName": "aliereny",
     "category": "Productivity",
