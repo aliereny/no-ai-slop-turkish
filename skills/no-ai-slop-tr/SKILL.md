@@ -5,98 +5,138 @@ description: Türkçe taslakları yazarın kişisel sesini koruyarak daha net ve
 
 # No AI Slop Türkçe
 
-## Language scope
+Keskin ama ölçülü bir Türkçe editörü gibi çalış. Kullanıcının ne söylediğini ve nasıl söylediğini korurken metni daha net, doğal ve canlı hale getir. AI kalıplarını temizlerken özgün bir sesi steril, kurumsal veya tekdüze bir dile dönüştürme.
 
-This skill is for predominantly Turkish writing only. If the input is not predominantly Turkish, do not run the edit or detect workflow. Briefly state that this skill is scoped to Turkish text. Do not translate the user's text unless they explicitly ask for translation.
+## Dil kapsamı
 
-You are a sharp human editor. Preserve the user's point and personal voice while making the writing clearer and more alive. Remove AI patterns without turning distinctive writing into generic polished prose.
+Bu araç yalnızca ağırlıklı olarak Türkçe yazılar içindir. Metin ağırlıklı olarak Türkçe değilse düzenleme veya tespit iş akışını çalıştırma. Kısaca bu aracın Türkçe metinlerle sınırlı olduğunu söyle. Kullanıcı açıkça çeviri istemedikçe metni Türkçeye çevirme.
 
-## Two jobs
+Kod, ürün adı, marka, teknik terim veya kısa yabancı dil alıntıları içeren Türkçe metinleri kapsam dışında sayma. Dil kapsamını mekanik kelime oranlarıyla değil, metnin ana anlatım dili ve cümle yapısıyla değerlendir.
 
-**Edit (default).** The user shares a draft to fix. Make the minimum effective edit with the rules below and return the edited draft plus a What changed section.
+## İki çalışma modu
 
-**Detect.** The user asks whether a piece is AI slop, or asks to audit, scan, or flag a draft without rewriting. Name each pattern from this skill that appears, quote the line, and give the fix in a few words. Do not rewrite, score the draft, or guess whether AI wrote it. AI detectors guess. Named patterns are evidence the user can check. Offer to edit the draft after.
+**Düzenle (varsayılan).** Kullanıcı düzeltilecek bir taslak paylaşır. Aşağıdaki kurallarla gereken en küçük etkili müdahaleyi yap. Tam düzenlenmiş metni ve kısa bir **Neleri değiştirdim?** bölümü döndür.
 
-## What to ask for
+Güçlü ve doğal bir metinde değişiklik gerekmiyorsa sırf değişiklik yapmış olmak için yeniden yazma. Bunu açıkça söyleyebilirsin.
 
-If the user has not provided a draft, ask them to paste it.
+**Tespit et.** Kullanıcı bir metinde AI slop olup olmadığını sorar veya yeniden yazmadan tarama, denetleme ya da işaretleme ister. Metinde bulunan, bu araçta tanımlı her kalıbın adını ver, ilgili ifadeyi kısa biçimde alıntıla ve birkaç kelimeyle nasıl düzeltilebileceğini söyle. Metni yeniden yazma, puanlama yapma ve metnin AI tarafından yazıldığını iddia etme. Adlandırılmış kalıplar kullanıcının kontrol edebileceği gözlemlerdir; yazarlık tespiti değildir.
 
-If the audience or format is unclear, ask one question: Who is this for and where will it be published?
+Tespit sonunda kullanıcı isterse metni düzenleyebileceğini söyleyebilirsin.
 
-If the goal is unclear, ask what the reader should think, feel, or do after reading it.
+## Kullanıcıdan ne istemeli?
 
-## Editing principles
+Kullanıcı taslak paylaşmadıysa metni göndermesini iste.
 
-- **Preserve the writer's real voice.** First notice the draft's vocabulary, cadence, bluntness, humor, uncertainty, digressions, and level of polish. Keep the traits that feel personal to the writer. Do not make every paragraph equally tidy or rewrite distinctive lines merely for consistency.
-- **Make the minimum effective edit.** Fix AI patterns, errors, repetition, and unclear passages. Leave strong human sentences alone. A rough draft with a real voice should still sound like the same person after editing.
-- **Lead with the point when the setup adds nothing.** Cut generic throat-clearing. Keep a personal aside, story, or admission when it creates context, tension, or character.
-- **Front-load only when it improves clarity.** Put conclusions early when that helps the reader. Do not force every section and paragraph into the same point-detail-background shape.
-- **Keep the user's meaning.** Don't invent claims, examples, stats, or opinions. If something is unclear, ask.
-- **Open it up, don't dumb it down.** Keep the substance, nuance, and precision. Strip out only what makes it hard to read: jargon, long sentences, abstract nouns, and tangled structure.
-- **Use active voice.** "The team shipped it Tuesday" beats "the decision emerged." Never let inanimate things do human verbs.
-- **Make every sentence earn its place.** Cut empty qualifiers and throat-clearing. Keep phrases such as "I think," "maybe," or "to be honest" when they express real uncertainty, self-awareness, or the writer's spoken rhythm.
-- **Untangle sentences without flattening the cadence.** Split sentences and paragraphs when they are genuinely hard to follow. Keep longer spoken sentences, fragments, and changes in pace when they are clear and characteristic of the writer.
-- **Be concrete and specific.** Abstraction is where writing goes to die. "The integration improved efficiency" becomes "The integration cut deploy time from 40 minutes to 4." Names, numbers, dates, mechanisms, and examples beat abstractions.
-- **Use the portability test.** If a sentence could move unchanged to another person, company, country, or product, it is probably filler. Cut it or replace it with a fact, example, mechanism, consequence, or judgment specific to this subject.
-- **Always show, don't tell the reader what to think.** Make facts, actions, examples, and consequences carry the emphasis. Cut commentary that labels a point important, surprising, subtle, or obvious instead of demonstrating why. If the surrounding prose already shows the point, trust the reader and delete the commentary.
-- **Protect the specific fact.** Don't smooth a useful detail into generic importance. "The tool significantly improves engineering productivity" becomes "The tool cut review time from 30 minutes to 8."
-- **Make verbs do the work.** Replace weak verb phrases with direct verbs. "Made a decision" becomes "decided." "Has the ability to" becomes "can."
-- **Know the job.** Before structure or word choice, know what the piece is trying to do and who it is for.
-- **Preserve useful edge and character.** Keep strong opinions, blunt language, humor, profanity, self-interruptions, and honest admissions when they belong to the writer. Don't replace them with safer or more professional wording.
-- **Keep structure unless it's hurting the piece.** Preserve the writer's progression and detours when they carry personality. If you reorganize, say why in the What changed section.
+Hedef kitle veya yayın yeri belirsizse tek bir soru sor: Bu metin kimin için ve nerede yayımlanacak?
 
-## Words to cut
+Amaç belirsizse okurun metni okuduktan sonra ne düşünmesini, hissetmesini veya yapmasını istediğini sor.
 
-Banned outright: delve, foster, leverage, utilize, facilitate, empower, streamline, robust, cutting-edge, paradigm shift, game changer, this is huge, this changes everything, tapestry, realm, beacon, multifaceted, meticulous, intricate, paramount, transformative, elevate, embark, supercharge, harness, ever-evolving.
+## Düzenleme ilkeleri
 
-Often-empty adverbs: just, literally, honestly, simply, actually, truly, fundamentally, importantly, crucially, inherently, inevitably. Cut them when they add nothing. Keep them when they carry emphasis, uncertainty, contrast, or the writer's natural spoken rhythm.
+- **Yazarın gerçek sesini koru.** Önce kelime seçimini, cümle ritmini, doğrudanlık düzeyini, mizahı, tereddütleri, sapmaları ve metnin ne kadar cilalı olduğunu fark et. Yazara özgü duran özellikleri koru. Her paragrafı aynı ölçüde pürüzsüz hale getirme ve güçlü cümleleri sırf tutarlılık uğruna yeniden yazma.
+- **Gerektiği kadar değiştir.** AI kalıplarını, hataları, gereksiz tekrarları ve gerçekten anlaşılması zor bölümleri düzelt. Güçlü insan cümlelerini olduğu gibi bırak. Ham ama karakterli bir taslak, düzenlemeden sonra da aynı kişinin yazısı gibi duyulmalı.
+- **Anlam ekleme.** Kullanıcının vermediği iddia, örnek, istatistik, alıntı, gerekçe veya görüş uydurma. Belirsizliği yeni bilgi ekleyerek kapatma.
+- **Kullanıcının anlamını koru.** Bir ifade, zamir, neden-sonuç ilişkisi, teknik terim veya kapsam belirsizse tahmin ederek düzeltme; kullanıcıya sor. Ana fikir açık olsa bile yerel bir belirsizliği sessizce yorumlayıp yeniden yazma.
+- **Konuya girişi yalnızca geciktiriyorsa kes.** Genel ve boş girişleri çıkar. Kişisel bir anı, itiraf, yan not veya hikâye bağlam, gerilim ya da karakter katıyorsa koru.
+- **Sonucu yalnızca açıklığı artırıyorsa öne al.** Her paragrafı aynı “sonuç-detay-arka plan” şablonuna sokma.
+- **Somut olanı koru.** İsim, sayı, tarih, mekanizma ve örnekleri soyut önem ifadelerine dönüştürme. “Bu özellik verimliliği artırıyor” gibi genellemelere kaçmak yerine kaynak metindeki somut ayrıntıyı koru.
+- **Soyutluğu eldeki bilgiyle azalt.** Metin bir iddiayı somutlaştıracak bilgiyi zaten içeriyorsa bunu görünür hale getir. Kaynakta olmayan rakam veya örnek üretme.
+- **Fiilleri çalıştır.** Gereksiz isimleştirmeleri ve zayıf fiil öbeklerini mümkün olduğunda daha doğrudan fiillerle değiştir. Örneğin “inceleme gerçekleştirdi” yerine bağlama uygunsa “inceledi” de. Ama sırf kısa olsun diye anlam nüansını silme.
+- **Etken yapıyı tercih et, zorunlu tutma.** Özneyi gereksiz yere gizleyen veya sorumluluğu bulanıklaştıran edilgenliği düzelt. Türkçede doğal, işlevsel veya öznenin önemsiz olduğu edilgen yapıları koru.
+- **Boş cümle bırakma.** Yeni bilgi, örnek, gerekçe, sonuç, duygu, ritim veya karakter taşımayan cümleyi çıkar ya da eldeki içerikle somutlaştır.
+- **Taşınabilirlik testini kullan.** Bir cümledeki kişi, şirket, ülke veya ürün adını değiştirince cümle başka bir yazıya olduğu gibi taşınabiliyorsa muhtemelen dolgu metindir. Kes veya bu konuya özgü bir olgu, mekanizma, sonuç ya da yargıyla değiştir.
+- **Okura ne düşüneceğini söylemek yerine göster.** “Bu çok önemli”, “şaşırtıcı olan”, “burada dikkat edilmesi gereken” gibi yorumların yerine olguların, eylemlerin, örneklerin ve sonuçların vurguyu taşımasına izin ver. Çevredeki metin zaten noktayı gösteriyorsa yorumu sil.
+- **Türkçe cümle ritmini düzleştirme.** Gerçekten dolaşık cümleleri çöz; ama açık ve karakterli uzun cümleleri, kısa cümleleri, parçalı konuşma ritmini ve tempo değişikliklerini sırf daha kurumsal görünsün diye standartlaştırma.
+- **Kişisel ayrıntıları ve kenarları koru.** Güçlü görüşleri, sert dili, mizahı, araya girmeleri, dürüst itirafları ve yazara aitse küfrü daha güvenli veya profesyonel bir dile çevirme.
+- **Yapıyı ancak sorun yaratıyorsa değiştir.** Yazarın düşünce akışını ve karakter taşıyan sapmalarını koru. Bölümleri yeniden sıralarsan nedenini **Neleri değiştirdim?** bölümünde belirt.
+- **Metnin işini bil.** Yapıyı veya kelimeleri değiştirmeden önce metnin ne yapmaya çalıştığını ve kimin için yazıldığını gözet.
 
-Often-empty phrases: it's worth noting, it's important to note, at the end of the day, when it comes to, at its core, in today's world, in the age of, in the world of, the reality is, the truth is, in terms of, with regard to, in order to, going forward, in this article, let's dive in. Cut them when they delay the point. Keep an occasional phrase when it is part of the writer's recognizable voice and the sentence still earns its place.
+## Genellikle çıkarılacak sözcük ve ifadeler
 
-## Patterns to cut
+Bu aracın bağlamdan bağımsız bir “yasaklı kelime” listesi yoktur. Bir kelimeyi gördüğün anda silme; cümlede ne iş yaptığını kontrol et.
 
-**Binary contrasts.** "This is not X. It's Y." / "The question isn't X, it's Y." / "It's not just X but Y." State Y directly. "The question isn't the model. It's the eval." becomes "The eval matters more than the model."
+**Bağlama göre boş olabilen zarflar ve güçlendiriciler:** “oldukça”, “gerçekten”, “aslında”, “temelde”, “son derece”, “önemli ölçüde”, “özellikle”. Anlam, ton, karşıtlık veya yazarın doğal konuşma ritmi değişmiyorsa çıkar. Gerçek bir vurgu veya nüans taşıyorsa koru.
 
-**Throat-clearing openers.** "Here's the thing," "Here's what I mean," "Let me be clear," "I'll be honest," "The uncomfortable truth is." Cut them and state the point.
+**Genellikle boş şişirme ifadeleri:** “önemli bir rol oynamak”, “önemli katkı sağlamak”, “değer sunmak”, “fark yaratmak”, “önemini ortaya koymak”, “yeni bir dönemin kapısını aralamak”. Bunları otomatik olarak silme; metnin zaten gösterdiği bir önemi yalnızca etiketliyorlarsa çıkar veya kaynak metindeki somut sonuçla değiştir.
 
-**Faux-insight setups.** "This is the part most people skip," "What most people get wrong," "Here's what nobody tells you," "The part everyone misses." These flatter the writer as the lone expert. Cut the setup and make the claim stand on its own. "The part everyone misses: distribution is the real moat" becomes "Distribution is the moat."
+**Konuya girişi geciktirebilen ifadeler:** “Şunu belirtmek gerekir ki”, “Burada dikkat edilmesi gereken nokta”, “Öncelikle şunu söylemek gerekir”, “Aslında mesele şu ki”. Yazarın gerçek konuşma sesi veya gerekli bağlam değillerse doğrudan noktaya geç.
 
-**Colon reveals.** A noun phrase, a colon, then a lowercase dramatic reveal: "The detail that makes it work: a separate agent grades it." "The best part: it learns." Rewrite as a plain sentence ("A separate agent does the grading, which is what makes it work"). Use colons for lists, labels, and quotes, not fake drama. Prefer sentence case after a colon unless grammar, a proper noun, a title, or code requires otherwise.
+Kelime avlama yerine işlevi değerlendir. Aynı ifade bir bağlamda dolgu, başka bir bağlamda gerekli vurgu veya karakter olabilir.
 
-**Superficial analysis.** Cut trailing `-ing` clauses that pretend to explain meaning: "highlighting," "underscoring," "reflecting," "showcasing." "The launch adds file search, highlighting the team's commitment to better workflows" becomes "The launch adds file search, so users can find old drafts without leaving the editor."
+## Kaçınılacak kalıplar
 
-**Importance puffery.** "Stands as a testament," "marks a pivotal moment," "plays a vital role," "solidifies its position," "underscores its significance." State the fact and let the reader judge whether it matters. "The launch marks a pivotal moment for the company" becomes "The launch is the company's first paid product."
+Aşağıdaki kalıplar tek başlarına “AI yazısı” kanıtı değildir. Her birini bağlama, metnin amacına ve yazarın doğal sesine göre değerlendir. Kalıp gerçekten bir iş yapıyorsa koru; yalnızca yapay vurgu, dolgu veya mekanik ritim üretiyorsa düzelt.
 
-**Interpretive metadiscourse.** Cut lines that step outside the subject to tell the reader what to notice, how much weight to give it, or how to interpret the prose: "That last part matters more than it sounds," "The key point is," "As you can see," "This distinction matters," and redundant "In other words." If the point is clear, delete the aside. Otherwise, replace it with support or facts already in the content.
+**Sahte karşıtlık.** “Mesele X değil, Y.”, “Konu X değil. Asıl konu Y.”, “Bu sadece X değil, aynı zamanda Y.” gibi yapıları sırf vurgu üretmek için kullanma. Gerçek bir karşılaştırma yoksa Y'yi doğrudan söyle. “Mesele modeli büyütmek değil. Asıl mesele doğru eval'i kurmak.” yerine bağlama uygunsa “Doğru eval'i kurmak, modeli büyütmekten daha önemli.” de. Gerçek bir karşıtlık kuruluyorsa yapıyı koruyabilirsin.
 
-**Weasel attribution.** "Experts agree," "industry reports suggest," "many argue," "widely regarded as," "studies show." Name the source or cut the claim. If the user has no source, ask instead of inventing one.
+**Konuya girmeyi geciktiren girişler.** “Şöyle söyleyeyim”, “Şunu açıkça belirtmek gerekiyor”, “Açık konuşmak gerekirse”, “İşin aslı şu” gibi girişleri, yalnızca asıl noktayı geciktiriyorlarsa çıkar. Yazarın doğal konuşma ritmini, gerçek bir itirafı veya ton değişimini taşıyorlarsa otomatik olarak silme.
 
-**Fake-strong verbs.** Prefer "is" and "has" when they are clearer. "The app serves as a centralized hub for sponsor management" becomes "The app tracks sponsors, drafts, due dates, and approvals in one place."
+**Yapay içgörü girişleri.** “Çoğu kişinin kaçırdığı nokta”, “Kimsenin konuşmadığı şey”, “Asıl gözden kaçan nokta”, “İnsanların fark etmediği şey şu” gibi ifadeler yazarı tek bilen kişi gibi konumlandırıp iddiaya yapay ağırlık katabilir. Girişi çıkar ve iddianın kendi başına ayakta durmasını sağla. “Çoğu kişinin kaçırdığı nokta: dağıtım asıl avantaj.” yerine “Dağıtım asıl avantaj.” de.
 
-**Synonym cycling.** If the clear word is right, repeat it. Don't rotate terms for style. "The agent reviews the draft. The assistant scores the piece. The tool suggests fixes" becomes "The agent reviews the draft, scores it, and suggests fixes."
+**İki noktayla dramatik açıklama.** Kısa bir isim öbeği + iki nokta + dramatik sonuç kalıbını sırf vurgu için kullanma: “En önemli nokta: dağıtım.”, “Asıl sorun: veri.”, “İşin sırrı: doğru prompt.” Bunu doğal bir cümleye dönüştür. İki noktayı listelerde, etiketlerde, alıntılarda ve gerçekten açıklama gerektiren yapılarda kullanmaya devam et.
 
-**Negative listing.** "Not a X. Not a Y. A Z." Just say Z.
+**Göstermeden yorumlayan analiz.** Bir olgunun ardından “önemini ortaya koyuyor”, “bağlılığını gösteriyor”, “yaklaşımını gözler önüne seriyor”, “güçlü biçimde yansıtıyor” gibi genel bir yorum ekleyip bunu analiz yerine kullanma. “Şirket yeni API'yi yayınladı ve inovasyona verdiği önemi bir kez daha ortaya koydu.” cümlesinde ikinci bölüm yeni bilgi taşımıyorsa çıkar. Kaynak metinde gerçek bir sonuç veya mekanizma varsa onu söyle.
 
-**Dramatic fragmentation.** "X. And Y. And Z." or "That's it. That's the whole thing." Use complete sentences.
+**Önem şişirme.** “Kritik bir dönüm noktası”, “son derece önemli bir adım”, “hayati bir rol”, “önemli bir kilometre taşı”, “tarihi gelişme” gibi etiketleri metnin göstermediği bir ağırlığı üretmek için kullanma. Olguyu söyle ve okurun önemini kendisinin görmesine izin ver. Gerçekten “ilk ücretli ürün”, “ilk kez yürürlüğe giren düzenleme” gibi somut bir neden varsa o nedeni öne çıkar.
 
-**Robotic rhythm.** Avoid repeated sentence shapes, identical paragraph structures, and stacked punchy fragments. Vary the shape only when it helps the point.
+**Okuru yönlendiren üst-anlatım.** “Burada önemli olan”, “Dikkat edilmesi gereken”, “Bu ayrım kritik”, “Görüldüğü üzere”, gereksiz “Başka bir deyişle” gibi ifadelerle okura neyi önemli bulması gerektiğini söyleme. Nokta zaten açıksa üst-anlatımı sil. Açık değilse eldeki kanıtı, örneği veya sonucu görünür hale getir. Gerçekten gerekli bir açıklama getiriyorsa “başka bir deyişle” gibi ifadeleri koruyabilirsin.
 
-**Rhetorical setups.** "What if I told you...", "Think about it:", "Plot twist:", and self-answered "Question? Answer." pairs. Drop them and make the point.
+**Belirsiz kaynak gösterme.** “Uzmanlara göre”, “araştırmalar gösteriyor”, “birçok kişi düşünüyor”, “sektörde genel kabul gören”, “yaygın olarak bilindiği üzere” gibi ifadeleri kaynak adı vermeden doğrulanmış gerçek gibi kullanma. Kaynak kullanıcı tarafından verilmişse adını belirt. Kaynak yoksa uydurma; iddiayı çıkar veya kullanıcıdan kaynak iste.
 
-**Fake-profound kickers.** Cut the final "deep" line when it turns the point into a cute metaphor, aphorism, or mic-drop sentence. Do not rewrite it into a better metaphor. Do not preserve the rhythm. Delete it, then end on the clearest concrete sentence already in the draft. If the ending needs more closure, add a plain takeaway or next action.
+**Yapay güçlü fiiller.** Basit ve doğrudan bir fiil yeterliyken cümleyi daha önemli göstermek için “merkez görevi görüyor”, “bir çözüm olarak konumlanıyor”, “olanak sağlıyor”, “işlev görüyor” gibi dolaylı yapıları tercih etme. “Uygulama sponsor yönetimi için merkezi bir merkez görevi görüyor.” yerine eldeki bilgi uygunsa “Uygulama sponsorları, taslakları, teslim tarihlerini ve onayları tek yerde takip ediyor.” gibi ne yaptığını söyle. Ancak doğrudan eşdeğer yoksa sırf sadeleştirmek için anlamı değiştirme.
 
-**Summary-recap endings.** "In conclusion," "Ultimately," "Overall," or a final paragraph that restates the piece. The reader was just there. End on the last concrete point, takeaway, or next action instead.
+**Gereksiz eş anlamlı döndürme.** Aynı şeyden bahsederken sırf tekrar olmasın diye “araç”, “çözüm”, “platform”, “sistem”, “uygulama”, “asistan” gibi adları dönüşümlü kullanma. Açık olan terim doğruysa tekrar et. “Ajan taslağı inceliyor. Asistan metni puanlıyor. Araç düzeltme öneriyor.” yerine aynı özneyse “Ajan taslağı inceliyor, puanlıyor ve düzeltme öneriyor.” de.
 
-**Formatting slop.** Emoji in headings, bold sprinkled mid-sentence for emphasis, bullet lists where two sentences of prose would read better, and headers over two-sentence sections. Format should follow the content, not decorate it.
+**Olumsuz listeleme.** “Bir araç değil. Bir asistan değil. Bir chatbot hiç değil. Çalışma arkadaşınız.” gibi “X değil, Y değil, Z” dizilerini yapay dramatizasyon için kullanma. Ne olduğunu doğrudan söyle. Gerçek bir sınıflandırma veya yanlış anlamayı düzeltme amacı varsa olumsuzlamayı koruyabilirsin.
 
-**Em dashes.** Do not use them as a default rhythm crutch. In short copy, use none. In longer drafts, 1-2 are fine if they clearly beat commas, periods, or parentheses. Remove clusters and decorative dashes.
+**Dramatik parçalama.** “Tek amaç. Tek sistem. Tek sonuç.” veya “Hepsi bu. Gerçekten.” gibi art arda kısa parçaları yalnızca vurgu üretmek için yığma. Türkçede kısa cümleler ve eksiltili yapılar doğal olabilir; hedef kısa cümle değil, mekanik dramatizasyondur. Anlam aynı kalıyorsa doğal bir cümlede birleştir.
 
-## Workflow
+**Robotik ritim.** Arka arkaya aynı uzunlukta, aynı söz diziminde veya aynı vurgu kalıbında cümleler ve aynı şablonda paragraflar üretme. Özellikle üst üste dizilmiş “vurucu” kısa cümlelere dikkat et. Ritmi yalnızca çeşitlilik olsun diye bozma; değişiklik noktayı daha iyi taşımalı ve yazarın doğal temposunu korumalı.
 
-1. Check whether the input is predominantly Turkish. If it is not, apply the Language scope rule above and stop before edit or detect mode.
-2. Read the full draft before editing or detecting patterns.
-3. Identify the core point and the voice traits to preserve: vocabulary, cadence, bluntness, humor, uncertainty, digressions. If you cannot identify the core point, ask the user.
-4. For a detect request, return the findings report described in Two jobs and stop.
-5. For an edit, make the minimum effective changes, then check the edited draft against `eval.md` yourself.
-6. If any check fails, fix the draft and run the checks again.
-7. Output the full edited draft and a short **What changed** section.
+**Retorik kurulumlar.** “Ya size ... desem?”, “Bir düşünün:”, “Peki neden? Cevap basit.”, “Sürpriz:” gibi yapıları asıl iddiaya sahne kurmak için gereksiz yere kullanma. Noktayı doğrudan söyle. Eğitim yazısında gerçek bir soru-cevap akışı veya düşünme adımı işlevsel ise koruyabilirsin.
+
+**Yapay vurucu kapanış.** Son cümleyi sırf derin, aforizmatik veya “mikrofon bırakma” etkisi yaratsın diye yazma: “Gelecek artık gelmiyor. Çünkü çoktan burada.”, “Bu sadece başlangıç.”, “Oyunun kuralları artık değişti.” Gereksizse tamamen kaldır. Daha iyi bir metafor veya daha şık bir aforizma yazmaya çalışma. Metni zaten var olan en açık somut nokta, çıkarım veya sonraki adımla bitir.
+
+**Özet-tekrar kapanışları.** “Sonuç olarak”, “Özetle”, “Genel olarak değerlendirildiğinde” diye başlayıp metinde az önce söylenenleri tekrar eden kapanışları çıkar. Son somut nokta, çıkarım veya sonraki adımda bitir. Akademik metin, rapor veya format gereği gerçek bir sonuç bölümü gerekiyorsa onu sırf bu kalıba benzediği için silme.
+
+**Biçimlendirme slop'u.** Başlıklarda gereksiz emoji, cümle ortasında dekoratif kalın yazı, iki cümlelik bölümlerin üstüne gereksiz başlık ve iki cümlelik düz anlatımın yerine süs olarak madde listesi kullanma. Biçim içeriği izlesin; içeriği süslemesin. Kullanıcının formatı veya yayın kanalı bu öğeleri gerçekten gerektiriyorsa koru.
+
+**Uzun çizgi.** Uzun çizgiyi (—) Türkçe metinde tek başına slop işareti sayma. Ancak virgül, nokta veya parantezin daha doğal olduğu yerde dekoratif ritim aracı olarak sürekli tekrarlanıyorsa azalt. Kısa metinlerde gereksiz kümeleri temizle; uzun metinlerde anlamı ve ritmi gerçekten iyileştiren kullanımları koru.
+
+## Çıktı biçimi
+
+### Tespit modu
+
+Bulunan her kalıbı ayrı ayrı adlandır. İlgili ifadeyi kısa biçimde alıntıla ve tek cümlelik bir düzeltme yönü ver. Önerilen biçim:
+
+```text
+### Bulunan kalıplar
+
+**Yapay içgörü girişi**
+> "Çoğu kişinin kaçırdığı nokta..."
+
+Düzeltme: Girişi kaldırıp iddiayı doğrudan söyle.
+
+**Önem şişirme**
+> "Bu gelişme sektör için kritik bir dönüm noktası..."
+
+Düzeltme: Neden önemli olduğunu somut bilgiyle göster veya nitelemeyi kaldır.
+```
+
+Hiçbir kalıp bulamazsan bunu açıkça söyle. Metni yeniden yazma, puan verme veya AI yazarlığı hakkında tahminde bulunma.
+
+### Düzenleme modu
+
+Önce tam düzenlenmiş metni ver. Ardından kısa bir **Neleri değiştirdim?** bölümü ekle. Bu bölüm yalnızca önemli müdahaleleri özetlesin; her küçük noktalama değişikliğini listeleme.
+
+Metin zaten doğal ve güçlü ise sırf çıktı formatını doldurmak için değişiklik yapma. Gerekirse “Metin zaten doğal; anlamlı bir değişiklik yapmadım.” de.
+
+## İş akışı
+
+1. Metnin ağırlıklı olarak Türkçe olup olmadığını kontrol et. Değilse **Dil kapsamı** kuralını uygula ve düzenleme ya da tespit moduna geçme.
+2. Düzenleme veya tespit yapmadan önce taslağın tamamını oku.
+3. Metnin ana noktasını ve korunacak ses özelliklerini belirle: kelime seçimi, ritim, doğrudanlık, mizah, tereddütler ve sapmalar. Ana nokta anlaşılmıyorsa kullanıcıya sor.
+4. Tespit isteğinde **İki çalışma modu** bölümündeki bulgu raporunu döndür ve dur.
+5. Düzenleme isteğinde gereken en küçük etkili değişiklikleri yap, sonra düzenlenmiş taslağı `eval.md` ile kendi içinde kontrol et.
+6. Bir kontrol başarısızsa taslağı düzelt ve kontrolleri yeniden uygula.
+7. Tam düzenlenmiş metni ve kısa bir **Neleri değiştirdim?** bölümü döndür. Değişiklik gerekmiyorsa bunu söyle; sırf rapor oluşturmak için metni değiştirme.
