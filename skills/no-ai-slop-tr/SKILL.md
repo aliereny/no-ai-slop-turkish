@@ -19,7 +19,7 @@ Kod, ürün adı, marka, teknik terim veya kısa yabancı dil alıntıları içe
 
 Güçlü ve doğal bir metinde değişiklik gerekmiyorsa sırf değişiklik yapmış olmak için yeniden yazma. Bunu açıkça söyleyebilirsin.
 
-**Tespit et.** Kullanıcı bir metinde AI slop olup olmadığını sorar veya yeniden yazmadan tarama, denetleme ya da işaretleme ister. Bu araç'de tanımlanan her kalıbın adını ver, ilgili ifadeyi kısa biçimde alıntıla ve birkaç kelimeyle nasıl düzeltilebileceğini söyle. Metni yeniden yazma, puanlama yapma ve metnin AI tarafından yazıldığını iddia etme. Adlandırılmış kalıplar kullanıcının kontrol edebileceği gözlemlerdir; yazarlık tespiti değildir.
+**Tespit et.** Kullanıcı bir metinde AI slop olup olmadığını sorar veya yeniden yazmadan tarama, denetleme ya da işaretleme ister. Bu araçta tanımlanan her kalıbın adını ver, ilgili ifadeyi kısa biçimde alıntıla ve birkaç kelimeyle nasıl düzeltilebileceğini söyle. Metni yeniden yazma, puanlama yapma ve metnin AI tarafından yazıldığını iddia etme. Adlandırılmış kalıplar kullanıcının kontrol edebileceği gözlemlerdir; yazarlık tespiti değildir.
 
 Tespit sonunda kullanıcı isterse metni düzenleyebileceğini söyleyebilirsin.
 
@@ -52,7 +52,7 @@ Amaç belirsizse okurun metni okuduktan sonra ne düşünmesini, hissetmesini ve
 
 ## Genellikle çıkarılacak sözcük ve ifadeler
 
-Bu araç'in bağlamdan bağımsız bir “yasaklı kelime” listesi yoktur. Bir kelimeyi gördüğün anda silme; cümlede ne iş yaptığını kontrol et.
+Bu aracın bağlamdan bağımsız bir “yasaklı kelime” listesi yoktur. Bir kelimeyi gördüğün anda silme; cümlede ne iş yaptığını kontrol et.
 
 **Bağlama göre boş olabilen zarflar ve güçlendiriciler:** “oldukça”, “gerçekten”, “aslında”, “temelde”, “son derece”, “önemli ölçüde”, “özellikle”. Anlam, ton, karşıtlık veya yazarın doğal konuşma ritmi değişmiyorsa çıkar. Gerçek bir vurgu veya nüans taşıyorsa koru.
 
