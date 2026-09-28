@@ -155,6 +155,27 @@ Corpus'un amacı ilk günden yapay bir "%100 başarı" üretmek değildir.
 
 Bir pattern davranışı bilinçli olarak değiştiriliyorsa ilgili corpus vakaları aynı PR'da açık gerekçeyle güncellenmelidir.
 
-## Runner
+## Runner ve v1.0 kalite kapısı
 
-Bu aşama yalnızca veri sözleşmesini ve corpus'u tanımlar. Otomatik runner sonraki aşamanın işidir. Runner yazılırken bu JSONL yapısı canonical kaynak olarak kullanılmalıdır.
+`scripts/eval_runner.py` canonical `cases.jsonl` ve 8 uzun metin fixture'ını kullanır. Standart kütüphane dışında bağımlılığı yoktur.
+
+```sh
+python scripts/eval_runner.py validate
+python scripts/eval_runner.py self-test
+OPENAI_API_KEY=... python scripts/eval_runner.py run --model MODEL_ID --output eval-results/outputs.jsonl
+python scripts/eval_runner.py grade --output eval-results/outputs.jsonl --report eval-results/report.json
+```
+
+`run`, gerçek skill talimatlarını ve `eval.md` dosyasını modele gönderir; istenen ve dönen model kimliğini, yanıt kimliğini, zamanı, corpus/skill parmak izini ve çıktıyı her vaka için JSONL'ye yazar. Aynı model ve aynı parmak iziyle kesilen çalışmayı devam ettirir; sürüm değişmişse yeni dosya gerekir. Çıktılar kullanıcı metinlerini de içerebilir; artifact erişimini buna göre yönetin. Bir model çağrısında hata oluşursa eldeki kayıtlar korunur ve iş başarısız olur.
+
+`grade` tespit başlıklarındaki kalıp adlarını `SKILL.md` içindeki 28 kalıbın sırasıyla eşler; beklenen/beklenmeyen bulguları ve düzenlemedeki birebir kalan sorunlu ifadeleri kontrol eder. Alıntının uygunluğu, gerçek yanlış pozitifler, anlam, üslup, yeni iddia ve uzun metin oracle'ları insan incelemesi ister. Otomatik kontrol geçse bile durum `review` kalır. `scope` vakaları da ana anlatım diline göre elle değerlendirilir. Başlıksız veya farklı adlandırılmış bulgular ayrıca incelenmelidir.
+
+İnceleme dosyası bir JSON nesnesidir: `{"PAT-01-pos-01": {"verdict": "pass", "note": "Alıntı ve sınıflandırma doğru."}}`. Her vaka için gerekçeli `pass` veya `fail` girin. Ardından:
+
+```sh
+python scripts/eval_runner.py grade --output eval-results/outputs.jsonl --review eval-results/reviews.json --report eval-results/report.json --strict
+```
+
+`--strict`, 148 vakanın tamamında gerekçeli insan onayı ve sıfır otomatik hata ister; `fail`, `review` veya `pending` varsa sıfırdan farklı çıkar. Bu eşik v1.0 için önerilen kalite kapısıdır. Hataları vaka ID'siyle düzeltip aynı modeli ve tüm corpus'u tekrar çalıştırın. CI yalnızca corpus sözleşmesini ve runner mantığını ağsız doğrular; canlı sonuçları varmış gibi göstermez.
+
+GitHub'daki **Model eval baseline** workflow'u için depoya `OPENAI_API_KEY` secret'ı ekleyip elle sabit bir model kimliğiyle çalıştırın. Transcript ve ön rapor Actions artifact'ı olarak saklanır; gizli anahtar yazdırılmaz. Son insan incelemesi yerel `--review` ile tamamlanır.

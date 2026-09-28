@@ -1,0 +1,60 @@
+name: Preview release
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - .codex-plugin/plugin.json
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: "3.12"
+      - name: Sürümü hazırla
+        id: version
+        run: |
+          version="$(python -c 'import json; print(json.load(open(".codex-plugin/plugin.json"))["version"])')"
+          echo "tag=v${version}" >> "$GITHUB_OUTPUT"
+      - name: Kaynağı ve paketi doğrula
+        run: |
+          python scripts/check_upstream.py --validate-config
+          python scripts/check_upstream.py --self-test
+          python scripts/check_turkish_surface.py --self-test
+          python scripts/check_turkish_surface.py
+          python scripts/eval_runner.py validate
+          python scripts/eval_runner.py self-test
+          python scripts/build_plugin.py
+      - name: ZIP'i kurulum biçiminde denetle
+        run: |
+          python - <<'PY'
+          import json, pathlib, tempfile, zipfile
+          version = json.loads(pathlib.Path('.codex-plugin/plugin.json').read_text())['version']
+          archive = pathlib.Path(f'dist/no-ai-slop-turkish-plugin-{version}.zip')
+          with tempfile.TemporaryDirectory() as directory, zipfile.ZipFile(archive) as package:
+              package.extractall(directory)
+              root = pathlib.Path(directory) / 'no-ai-slop-turkish'
+              assert json.loads((root / '.codex-plugin/plugin.json').read_text())['version'] == version
+              assert (root / 'skills/no-ai-slop-tr/SKILL.md').is_file()
+              assert (root / 'skills/no-ai-slop-tr/eval.md').is_file()
+          print('ZIP install smoke test passed')
+          PY
+      - name: Önizleme release'ini yayımla
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          RELEASE_TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            echo "$RELEASE_TAG already published; skipping"
+            exit 0
+          fi
+          gh release create "$RELEASE_TAG" dist/no-ai-slop-turkish-plugin-*.zip \
+            --target "$GITHUB_SHA" --title "$RELEASE_TAG Preview" \
+            --notes-file CHANGELOG.md --prerelease
