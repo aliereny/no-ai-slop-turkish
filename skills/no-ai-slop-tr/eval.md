@@ -6,12 +6,12 @@ For detect requests, make sure the response names each pattern found with a quot
 
 ## Language scope
 
-1. Before running edit or detect mode, is the input predominantly Turkish?
+1. Before running edit or detect mode, is the input predominantly Turkish based on its main narrative language and sentence structure, without treating code, product names, brands, technical English terms, or short foreign-language quotations as disqualifying by themselves?
 2. If the input is not predominantly Turkish, did the response stop the edit/detect workflow, briefly state that the skill is scoped to Turkish text, and avoid rewriting, auditing, or translating the text unless translation was explicitly requested?
 
 ## Editing principles
 
-1. Does the edit preserve the user's point without adding claims, examples, stats, quotes, or opinions?
+1. Does the edit preserve the user's meaning without adding claims, examples, stats, quotes, or opinions, and avoid guessing through local ambiguity? If a phrase, pronoun, causal relation, technical term, or scope is unclear, did it ask the user instead of silently resolving it?
 2. Does it preserve the writer's distinctive vocabulary, cadence, bluntness, humor, uncertainty, digressions, and level of polish?
 3. Does it leave strong human sentences alone instead of rewriting them for consistency or making every paragraph equally tidy?
 4. Is the amount of cutting proportional to the actual slop, with no aggressive compression that strips out character?
