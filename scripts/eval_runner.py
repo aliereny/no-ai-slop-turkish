@@ -116,6 +116,25 @@ def parse_codex_events(output):
     return messages[-1], thread_id
 
 
+def codex_diagnostics(output, stderr):
+    details = []
+    for line in output.splitlines():
+        try:
+            event = json.loads(line)
+        except json.JSONDecodeError:
+            continue
+        if event.get('type') in ('error', 'turn.failed'):
+            error = event.get('error')
+            if isinstance(error, dict):
+                error = error.get('message') or str(error)
+            details.append(str(error or event.get('message') or event))
+    if stderr.strip():
+        details.append(stderr.strip())
+    if not details and output.strip():
+        details.append(output.strip())
+    return '\n'.join(details)[-2000:] or 'Codex returned no diagnostic output'
+
+
 def codex_environment():
     environment = os.environ.copy()
     # Prevent ambient API credentials from silently billing a different account.
@@ -149,8 +168,11 @@ def codex_call(model, instructions, user_text, sandbox_dir):
         result = subprocess.run(command, input=prompt_text, text=True, capture_output=True,
                                 cwd=directory, timeout=300, check=False, env=codex_environment())
     if result.returncode:
-        raise RuntimeError(f'Codex exited {result.returncode}: {result.stderr[-1200:]}')
-    answer, thread_id = parse_codex_events(result.stdout)
+        raise RuntimeError(f'Codex exited {result.returncode}: {codex_diagnostics(result.stdout, result.stderr)}')
+    try:
+        answer, thread_id = parse_codex_events(result.stdout)
+    except (ValueError, json.JSONDecodeError) as exc:
+        raise RuntimeError(f'{exc}: {codex_diagnostics(result.stdout, result.stderr)}') from exc
     return answer, model, thread_id
 
 
@@ -179,21 +201,20 @@ def run(args):
                 raise ValueError('Output file belongs to another corpus/skill/model/provider; use a new file')
             existing[row['id']] = row
     instructions = SKILL.read_text(encoding='utf-8') + '\n\n' + EVAL.read_text(encoding='utf-8')
-    with destination.open('a', encoding='utf-8') as stream:
-        for case in data:
-            if case['id'] in existing:
-                continue
-            if args.provider == 'codex':
-                answer, resolved_model, response_id = codex_call(args.model, instructions, prompt(case), destination.parent)
-            else:
-                answer, resolved_model, response_id = api_call(args.model, instructions, prompt(case))
-            record = {'id': case['id'], 'fingerprint': current_hash, 'provider': args.provider,
-                      'requested_model': args.model, 'model': resolved_model,
-                      'response_id': response_id, 'at': dt.datetime.now(dt.timezone.utc).isoformat(),
-                      'output': answer}
+    for case in data:
+        if case['id'] in existing:
+            continue
+        if args.provider == 'codex':
+            answer, resolved_model, response_id = codex_call(args.model, instructions, prompt(case), destination.parent)
+        else:
+            answer, resolved_model, response_id = api_call(args.model, instructions, prompt(case))
+        record = {'id': case['id'], 'fingerprint': current_hash, 'provider': args.provider,
+                  'requested_model': args.model, 'model': resolved_model,
+                  'response_id': response_id, 'at': dt.datetime.now(dt.timezone.utc).isoformat(),
+                  'output': answer}
+        with destination.open('a', encoding='utf-8') as stream:
             stream.write(json.dumps(record, ensure_ascii=False) + '\n')
-            stream.flush()
-            print(f'{case["id"]}: recorded', file=sys.stderr)
+        print(f'{case["id"]}: recorded', file=sys.stderr)
 
 
 def grade_case(case, output):
@@ -232,7 +253,10 @@ def grade_case(case, output):
 
 def grade(args):
     data = validate()
-    rows = {r['id']: r for r in map(json.loads, Path(args.output).read_text(encoding='utf-8').splitlines())}
+    output_path = Path(args.output)
+    if not output_path.is_file() or output_path.stat().st_size == 0:
+        raise ValueError('No model outputs recorded. Run `eval_runner.py run` first; a previous Codex call may have failed.')
+    rows = {r['id']: r for r in map(json.loads, output_path.read_text(encoding='utf-8').splitlines())}
     reviews = json.loads(Path(args.review).read_text(encoding='utf-8')) if args.review else {}
     if set(rows) - {c['id'] for c in data}:
         raise ValueError('Unknown IDs in output')
@@ -272,6 +296,8 @@ def self_test():
               '{"type":"item.completed","item":{"type":"agent_message","text":"Merhaba"}}\n'
               '{"type":"turn.completed"}\n')
     assert parse_codex_events(events) == ('Merhaba', 't-1')
+    assert codex_diagnostics('{"type":"error","message":"model unavailable"}', '') == 'model unavailable'
+    assert codex_diagnostics('{"type":"turn.failed","error":{"message":"sandbox denied"}}', '') == 'sandbox denied'
     try:
         parse_codex_events(events.replace('turn.completed', 'turn.failed'))
     except ValueError:
