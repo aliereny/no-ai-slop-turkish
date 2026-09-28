@@ -106,7 +106,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          issue_number="$(gh api "repos/${GITHUB_REPOSITORY}/issues?state=open&per_page=100" --jq '.[] | select((.body // "") | contains("<!-- no-ai-slop-upstream-sync -->")) | .number' | head -n 1)"
+          issue_number="$(gh api --paginate "repos/${GITHUB_REPOSITORY}/issues?state=open&per_page=100" --jq '.[] | select((.body // "") | contains("<!-- no-ai-slop-upstream-sync -->")) | .number' | head -n 1)"
           state="$(cat upstream-issue-state.txt)"
           if [ -n "$issue_number" ]; then
             gh api "repos/${GITHUB_REPOSITORY}/issues/${issue_number}" --method PATCH --input upstream-issue-payload.json
