@@ -1,0 +1,117 @@
+name: Upstream değişiklik kontrolü
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: upstream-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: "3.12"
+      - name: Upstream durumunu raporla
+        id: report
+        run: |
+          set +e
+          python scripts/check_upstream.py --json > upstream-report.json
+          result=$?
+          set -e
+          if [ "$result" -eq 1 ]; then
+            cat upstream-report.json
+            exit 1
+          fi
+          if [ "$result" -eq 2 ]; then
+            echo "status=behind" >> "$GITHUB_OUTPUT"
+          else
+            echo "status=current" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Takip issue içeriğini hazırla
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          report = json.loads(Path("upstream-report.json").read_text(encoding="utf-8"))
+          marker = "<!-- no-ai-slop-upstream-sync -->"
+          is_current = report["status"] == "up_to_date"
+          title = "Upstream güncel" if is_current else "Upstream değişikliği incelenmeli"
+          lines = [marker, ""]
+          lines.append(f"Upstream: `{report['repository']}:{report['branch']}`")
+          lines.append(f"Takip edilen: `{report['tracked_commit']}`")
+          lines.append(f"Güncel upstream: `{report['latest_commit']}`")
+          lines.append(f"Durum: `{report['status']}`")
+          if not is_current:
+              lines.extend(["", "### İncelenecek commitler"])
+              for commit in report.get("commits", []):
+                  url = commit.get("url")
+                  label = f"[{commit['short_sha']}]({url})" if url else f"`{commit['short_sha']}`"
+                  lines.append(f"- {label} — {commit['message']}")
+              if report.get("commit_list_truncated"):
+                  lines.append("- Commit listesi API sınırında kesildi; compare bağlantısında kalan commitleri de inceleyin.")
+              lines.extend(["", "### Değişen dosyalar"])
+              category_names = {
+                  "SEMANTIC": "ANLAMSAL",
+                  "STRUCTURAL": "YAPISAL",
+                  "DOCS": "BELGE",
+                  "TURKISH_OWNED": "TÜRKÇEYE ÖZGÜ",
+                  "REVIEW": "İNCELE",
+              }
+              for item in report.get("changed_files", []):
+                  category = category_names.get(item["category"], item["category"])
+                  destination = f" → `{item['destination']}`" if item.get("destination") else ""
+                  lines.append(f"- [{category}] `{item['path']}`{destination}")
+              lines.extend(
+                  [
+                      "",
+                      "### Sonraki adımlar",
+                      "- [ ] Her upstream commit'ini ve değişen dosyaları incele.",
+                      "- [ ] Her değişiklik için Türkçe uyarlama, yapısal taşıma veya atlama kararını gerekçesiyle kaydet.",
+                      "- [ ] `sync/upstream-<short-sha>` dalında gerekli değişiklikleri uygula ve kontrol komutlarını çalıştır.",
+                      "- [ ] Sync PR'ı tamamlanınca `.upstream.json` baseline'ını incelenmiş commit'e ilerlet.",
+                  ]
+              )
+              lines.extend(
+                  [
+                      "",
+                      f"Karşılaştırma: {report['compare_url']}",
+                      "Süreç: [UPSTREAM.md](https://github.com/aliereny/no-ai-slop-turkish/blob/main/UPSTREAM.md)",
+                  ]
+              )
+          else:
+              lines.extend(["", "Açık upstream takip issue'su varsa baseline güncel olduğu için kapatılabilir."])
+
+          state = "closed" if is_current else "open"
+          payload = {"title": title, "body": "\n".join(lines)}
+          if is_current:
+              payload["state"] = "closed"
+          Path("upstream-issue-payload.json").write_text(
+              json.dumps(payload, ensure_ascii=False), encoding="utf-8"
+          )
+          Path("upstream-issue-state.txt").write_text(state, encoding="utf-8")
+          PY
+      - name: Tek takip issue'sunu oluştur, güncelle veya kapat
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          issue_number="$(gh api --paginate "repos/${GITHUB_REPOSITORY}/issues?state=open&per_page=100" --jq '.[] | select((.body // "") | contains("<!-- no-ai-slop-upstream-sync -->")) | .number' | head -n 1)"
+          state="$(cat upstream-issue-state.txt)"
+          if [ -n "$issue_number" ]; then
+            gh api "repos/${GITHUB_REPOSITORY}/issues/${issue_number}" --method PATCH --input upstream-issue-payload.json
+          elif [ "$state" = "open" ]; then
+            gh api "repos/${GITHUB_REPOSITORY}/issues" --method POST --input upstream-issue-payload.json
+          else
+            echo "Açık upstream takip issue'su yok; yeni issue açılmadı."
+          fi

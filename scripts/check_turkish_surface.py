@@ -48,6 +48,12 @@ EXPECTED_DISPLAY_NAME = "No AI Slop Türkçe"
 
 UPSTREAM_REFERENCE = "petergyang/no-ai-slop"
 
+ALLOWED_UPSTREAM_SKILL_PATHS = {
+    "skills/no-ai-slop/SKILL.md": "skills/no-ai-slop-tr/SKILL.md",
+    "skills/no-ai-slop/eval.md": "skills/no-ai-slop-tr/eval.md",
+    "skills/no-ai-slop/agents/openai.yaml": "skills/no-ai-slop-tr/agents/openai.yaml",
+}
+
 BLOCKED_UPSTREAM_PHRASES = (
     "What changed",
     "Remove AI slop",
@@ -130,11 +136,23 @@ def add_match_finding(
     )
 
 
+def is_known_upstream_skill_path_mapping(path: str, text: str, match: re.Match[str]) -> bool:
+    if path != "UPSTREAM.md":
+        return False
+    line = text.splitlines()[line_number(text, match.start()) - 1]
+    return line.lstrip().startswith("|") and any(
+        f"| `{source_path}` |" in line and f"`{target_path}`" in line
+        for source_path, target_path in ALLOWED_UPSTREAM_SKILL_PATHS.items()
+    )
+
+
 def scan_surface_text(path: str, text: str) -> list[Finding]:
     findings: list[Finding] = []
 
     for pattern, message, expected in BLOCKED_IDENTITY_PATTERNS:
         for match in pattern.finditer(text):
+            if message == "Eski skill yolu bulundu" and is_known_upstream_skill_path_mapping(path, text, match):
+                continue
             add_match_finding(
                 findings,
                 path=path,
@@ -366,6 +384,8 @@ def run_self_tests() -> None:
     assert_pass("agents/openai.yaml", "$no-ai-slop-tr")
 
     assert_pass("README.md", "Kaynak: petergyang/no-ai-slop")
+    assert_pass("UPSTREAM.md", "| `skills/no-ai-slop/SKILL.md` | `skills/no-ai-slop-tr/SKILL.md` |")
+    assert_fail("UPSTREAM.md", "Upstream yolu: `skills/no-ai-slop/SKILL.md`")
     assert_fail("agents/openai.yaml", "Kaynak: petergyang/no-ai-slop")
 
     assert_fail("README.md", "What changed")
