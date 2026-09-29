@@ -63,8 +63,8 @@ def cases():
 def validate():
     names = patterns()
     data = cases()
-    if len(data) != 152 or len(fixtures()) != 8 or len({v['id'] for v in data}) != len(data):
-        raise ValueError('Expected 144 unique atomic cases and 8 unique long-form fixtures')
+    if len(data) != 157 or len(fixtures()) != 8 or len({v['id'] for v in data}) != len(data):
+        raise ValueError('Expected 149 unique atomic cases and 8 unique long-form fixtures')
     for case in data:
         if not all(case.get(k) for k in ('id', 'mode', 'register', 'input')) or not isinstance(case.get('expect'), dict):
             raise ValueError(f'Invalid case: {case.get("id")}')
@@ -369,7 +369,7 @@ def main():
     grader.add_argument('--output', required=True)
     grader.add_argument('--review', help='JSON object: case ID -> {verdict: pass|fail, note: rationale}')
     grader.add_argument('--report')
-    grader.add_argument('--strict', action='store_true', help='Exit nonzero unless all 152 cases pass review')
+    grader.add_argument('--strict', action='store_true', help='Exit nonzero unless all 157 cases pass review')
     args = parser.parse_args()
     if args.command == 'validate':
         print(f'Validated {len(validate())} cases ({len(fixtures())} long-form)')

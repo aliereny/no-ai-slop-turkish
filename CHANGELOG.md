@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-- `PAT-29 — Genel adla belirsizleştirme` eklendi; dört atomik vaka ve PAT-18 çakışma sınırı tanımlandı. Toplam 29 kalıp ve 152 eval vakası.
+- `PAT-29 — Genel adla belirsizleştirme` eklendi; tespit, işlevsel kullanım, PAT-14/PAT-18 çakışması ve anlam korunumu için dokuz odaklı vaka tanımlandı. Toplam 29 kalıp ve 157 eval vakası.
 
 ## v0.2.0 — Preview
 

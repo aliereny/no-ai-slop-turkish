@@ -15,14 +15,17 @@ Amaç belirli bir "doğru cümle" üretmek değil; skill'in şu sözleşmeleri k
 - `cases.jsonl`: Kısa ve orta uzunlukta atomik vakaların canonical kaynağı.
 - `fixtures/long-form/`: Paragraf ve metin düzeyinde ses, ritim ve doğallık testleri.
 
-Corpus hedefi **144 atomik vaka**dır:
+Corpus **149 atomik vaka** içerir:
 
 - PAT-01–PAT-29 için 4 vaka: 2 pozitif + 2 zor negatif = 116
-- 12 overlap/sınıflandırma vakası
+- PAT-29 için 1 ek işlevsel kullanım vakası
+- 14 overlap/sınıflandırma vakası
 - 8 dil kapsamı vakası
-- 8 çapraz kalite vakası
+- 10 çapraz kalite vakası
 
-Uzun metin fixture'ları bu 144 atomik vakanın dışında tutulur.
+8 uzun metin fixture'ı ile toplam **157 vaka** vardır.
+
+PAT-29'un dokuz odaklı vakası, geçme ölçütleri ve kısmi koşum komutu için [PAT-29 inceleme rehberine](pat-29.md) bakın.
 
 ## Vaka kimlikleri
 
@@ -188,6 +191,6 @@ API ile çalıştırmak isterseniz `OPENAI_API_KEY=... python scripts/eval_runne
 python scripts/eval_runner.py grade --output eval-results/outputs.jsonl --review eval-results/reviews.json --report eval-results/report.json --strict
 ```
 
-`--strict`, 152 vakanın tamamında gerekçeli insan onayı ve sıfır otomatik hata ister; `fail`, `review` veya `pending` varsa sıfırdan farklı çıkar. Bu eşik için önerilen kalite kapısıdır. Hataları vaka ID'siyle düzeltip aynı modeli ve tüm corpus'u tekrar çalıştırın. CI yalnızca corpus sözleşmesini ve runner mantığını ağsız doğrular; canlı sonuçları varmış gibi göstermez.
+`--strict`, 157 vakanın tamamında gerekçeli insan onayı ve sıfır otomatik hata ister; `fail`, `review` veya `pending` varsa sıfırdan farklı çıkar. Bu eşik için önerilen kalite kapısıdır. Hataları vaka ID'siyle düzeltip aynı modeli ve tüm corpus'u tekrar çalıştırın. CI yalnızca corpus sözleşmesini ve runner mantığını ağsız doğrular; canlı sonuçları varmış gibi göstermez.
 
 GitHub'daki **Model eval baseline** workflow'u isteğe bağlı API yoludur; bunun için depoya `OPENAI_API_KEY` secret'ı eklemek gerekir. Genel/açık kaynak GitHub runner'ına ChatGPT oturum dosyanızı veya belirtecinizi koymayın. Pro aboneliğinizle test için yukarıdaki yerel Codex yolunu kullanın. Son insan incelemesi yerel `--review` ile tamamlanır.
