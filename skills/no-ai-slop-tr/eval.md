@@ -112,7 +112,7 @@ Her kontrolde iki şeyi birlikte değerlendir: slop işlevi temizlenmiş mi ve a
 
 **PAT-17 — Üçlü pazarlama sıfatları.** “hızlı, güçlü ve kullanıcı dostu” gibi kanıtsız pazarlama sıfatı kümeleri temizlenmiş mi? Gerçek ve birbirinden ayrı üç özelliğin sayıldığı listeler korunmuş mu?
 
-**PAT-18 — Yapay gözlem dili.** “karşımıza çıkıyor”, “dikkat çekiyor”, “öne çıkıyor”, “kendini gösteriyor” yalnızca olgunun varlığını dramatize ediyorsa doğrudanlaştırılmış mı? “Unsur”, “nokta”, “konu” gibi genel adlar bilinen olguyu gizliyorsa olgu adıyla belirtilmiş mi? Kaynakta bulunmayan “darboğaz”, “sorun”, “gelişim fırsatı” gibi özel bir sınıf veya ölçüm uydurulmamış mı? Genel adın gerçek bir sınıflandırmada ve “öne çıkıyor”un gerçek bir karşılaştırmada işlevsel kullanımı korunmuş mu?
+**PAT-18 — Yapay gözlem dili.** “karşımıza çıkıyor”, “dikkat çekiyor”, “öne çıkıyor”, “kendini gösteriyor” yalnızca olgunun varlığını dramatize ediyorsa doğrudanlaştırılmış mı? Gerçek bir karşılaştırmada bir özelliğin diğerlerinden ayrıldığını anlatan kullanım korunmuş mu?
 
 **PAT-19 — Çeviri kokan cümle iskeleti.** “X üzerinde etki yaratmak”, gereksiz “sahip olmak” zincirleri, “X tarafında” ve İngilizce isim ağırlıklı iskeletler gerçekten doğal olmayan yerde daha doğal Türkçe sözdizimine çevrilmiş mi? “Backend tarafında Go” gibi açık teknik ayrımlar sırf yüzey biçimi yüzünden değiştirilmemiş mi?
 
@@ -135,6 +135,8 @@ Her kontrolde iki şeyi birlikte değerlendir: slop işlevi temizlenmiş mi ve a
 **PAT-27 — Biçimlendirme slop'u.** Gereksiz emoji başlıklar, dekoratif kalın yazılar, iki cümlelik bölümlerin üstündeki süs başlıkları ve gereksiz madde listeleri temizlenmiş mi? Kullanıcının yayın kanalı veya formatı bu öğeleri gerektiriyorsa korunmuş mu?
 
 **PAT-28 — Uzun çizgi.** Uzun çizgi (—) sırf ritim süsü olarak kümeleniyorsa azaltılmış mı? Anlamı veya ritmi gerçekten iyileştiren kullanımlar korunmuş ve sayısal bir kota uygulanmamış mı?
+
+**PAT-29 — Genel adla belirsizleştirme.** “Unsur”, “nokta”, “konu” gibi genel adlar bilinen olguyu gizliyorsa olgu adıyla belirtilmiş mi? Kaynakta bulunmayan “darboğaz”, “sorun”, “gelişim fırsatı” gibi özel bir sınıf veya ölçüm uydurulmamış mı? Genel adın gerçek bir sınıflandırma veya konu belirtme işlevi korunmuş mu? Gözlemci dolgu ile aynı sorunu iki kez raporlamadan PAT-18 ayrımı yapılmış mı?
 
 ## Çakışma ve sınıflandırma
 

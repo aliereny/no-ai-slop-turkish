@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- `PAT-29 — Genel adla belirsizleştirme` eklendi; dört atomik vaka ve PAT-18 çakışma sınırı tanımlandı. Toplam 29 kalıp ve 152 eval vakası.
+
 ## v0.2.0 — Preview
 
 - Türkçeye özgü 28 kalıbı ve bağlama duyarlı istisnaları içeren skill paketi.
