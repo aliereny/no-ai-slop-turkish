@@ -25,8 +25,6 @@ Corpus **149 atomik vaka** içerir:
 
 8 uzun metin fixture'ı ile toplam **157 vaka** vardır.
 
-PAT-29'un dokuz odaklı vakası, geçme ölçütleri ve kısmi koşum komutu için [PAT-29 inceleme rehberine](pat-29.md) bakın.
-
 ## Vaka kimlikleri
 
 Kimlikler kararlı olmalıdır. Bir vaka anlamını değiştirecek kadar yeniden yazılacaksa eski ID farklı bir test anlamına gelecek şekilde sessizce yeniden kullanılmamalıdır.
