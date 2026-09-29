@@ -153,7 +153,13 @@ def check_chatgpt_login():
         raise ValueError('Codex CLI must be signed in with ChatGPT; run `codex login` and check `codex login status`')
 
 
-def codex_call(model, instructions, user_text, sandbox_dir):
+def decode_partial(value):
+    if isinstance(value, bytes):
+        return value.decode('utf-8', errors='replace')
+    return value or ''
+
+
+def codex_call(model, instructions, user_text, sandbox_dir, timeout=300, retries=1):
     executable = shutil.which('codex')
     if not executable:
         raise ValueError('Codex CLI is required: install it and run `codex login` with ChatGPT')
@@ -166,9 +172,21 @@ def codex_call(model, instructions, user_text, sandbox_dir):
                    'Dosya okuma, araç çağırma veya dış bilgi kullanma. Yalnızca kullanıcıya verilecek son yanıtı üret.\n\n'
                    f'{user_text}')
     # No repository files or auth material are copied into this isolated working directory.
-    with tempfile.TemporaryDirectory(dir=sandbox_dir) as directory:
-        result = subprocess.run(command, input=prompt_text, text=True, capture_output=True,
-                                cwd=directory, timeout=300, check=False, env=codex_environment())
+    for attempt in range(retries + 1):
+        with tempfile.TemporaryDirectory(dir=sandbox_dir) as directory:
+            try:
+                result = subprocess.run(command, input=prompt_text, text=True, capture_output=True,
+                                        cwd=directory, timeout=timeout, check=False, env=codex_environment())
+            except subprocess.TimeoutExpired as exc:
+                detail = codex_diagnostics(decode_partial(exc.stdout), decode_partial(exc.stderr))
+                if attempt < retries:
+                    print(f'Codex timed out after {timeout}s; retrying ({attempt + 1}/{retries}). {detail}',
+                          file=sys.stderr)
+                    continue
+                raise RuntimeError(f'Codex timed out after {timeout}s on {retries + 1} attempt(s). '
+                                   f'{detail}. Saved cases remain in the JSONL file; rerun with '
+                                   '`--timeout 600` or resume later.') from exc
+        break
     if result.returncode:
         raise RuntimeError(f'Codex exited {result.returncode}: {codex_diagnostics(result.stdout, result.stderr)}')
     try:
@@ -184,6 +202,8 @@ def fingerprint():
 
 
 def run(args):
+    if args.timeout <= 0 or args.retries < 0 or args.retries > 3:
+        raise ValueError('--timeout must be positive and --retries must be between 0 and 3')
     if args.provider == 'api' and not os.getenv('OPENAI_API_KEY'):
         raise ValueError('OPENAI_API_KEY is required for the API provider')
     if args.provider == 'codex':
@@ -207,8 +227,13 @@ def run(args):
     for case in data:
         if case['id'] in existing:
             continue
+        print(f'{case["id"]}: starting', file=sys.stderr)
         if args.provider == 'codex':
-            answer, resolved_model, response_id = codex_call(args.model, instructions, prompt(case), destination.parent)
+            try:
+                answer, resolved_model, response_id = codex_call(
+                    args.model, instructions, prompt(case), destination.parent, args.timeout, args.retries)
+            except RuntimeError as exc:
+                raise RuntimeError(f'{case["id"]}: {exc}') from exc
         else:
             answer, resolved_model, response_id = api_call(args.model, instructions, prompt(case))
         record = {'id': case['id'], 'fingerprint': current_hash, 'provider': args.provider,
@@ -320,6 +345,8 @@ def main():
                         help='Local ChatGPT subscription via Codex CLI (default), or Responses API')
     runner.add_argument('--model', help='Pin a supported model ID; omit for Codex CLI recommended model')
     runner.add_argument('--output', required=True, help='JSONL transcript; resumes matching runs')
+    runner.add_argument('--timeout', type=int, default=300, help='Seconds allowed for each Codex call (default: 300)')
+    runner.add_argument('--retries', type=int, default=1, help='Retries after a Codex timeout, 0-3 (default: 1)')
     grader = subs.add_parser('grade')
     grader.add_argument('--output', required=True)
     grader.add_argument('--review', help='JSON object: case ID -> {verdict: pass|fail, note: rationale}')
@@ -339,5 +366,5 @@ def main():
 if __name__ == '__main__':
     try:
         main()
-    except (ValueError, KeyError, urllib.error.HTTPError) as exc:
+    except (ValueError, KeyError, RuntimeError, urllib.error.HTTPError) as exc:
         raise SystemExit(str(exc)) from exc
