@@ -85,14 +85,14 @@ Bu örnekte gereksiz geçiş ifadeleri, “mümkün hale getirmek” zinciri ve 
 
 ## Hangi kalıpları yakalıyor?
 
-Skill şu anda 29 kalıbı değerlendirir. Bunların bir bölümü genel AI yazım davranışlarının Türkçe karşılıkları, bir bölümü ise Türkçeye özgü yapılardır.
+Skill şu anda 30 kalıbı değerlendirir. Bunların bir bölümü genel AI yazım davranışlarının Türkçe karşılıkları, bir bölümü ise Türkçeye özgü yapılardır.
 
 | Grup | Örnek kalıplar |
 | --- | --- |
 | Yapay vurgu ve giriş | Sahte karşıtlık, konuya girmeyi geciktiren girişler, yapay içgörü girişleri, iki noktayla dramatik açıklama |
 | Şişirme ve yorum | Göstermeden yorumlayan analiz, önem şişirme, okuru yönlendiren üst-anlatım, belirsiz kaynak gösterme |
 | Türkçeye özgü bürokratik dil | Bürokratik isimleştirme, edilgenlik sislemesi, soyut isim yığılması, resmî kip otomatiği |
-| Mekanik Türkçe | Mekanik geçiş bağlaçları, gösterici zamir zinciri, yapay gözlem dili, genel adla belirsizleştirme, çeviri kokan cümle iskeleti |
+| Mekanik Türkçe | Mekanik geçiş bağlaçları, gösterici zamir zinciri, geciken adlandırma, yapay gözlem dili, genel adla belirsizleştirme, çeviri kokan cümle iskeleti |
 | Ritim ve kapanış | Gereksiz eş anlamlı döndürme, dramatik parçalama, robotik ritim, retorik kurulumlar, yapay vurucu kapanış |
 | Biçim | Gereksiz özet-tekrar kapanışları, biçimlendirme slop'u, dekoratif uzun çizgi kullanımı |
 
@@ -114,10 +114,10 @@ No AI Slop Türkçe:
 
 Ana davranış sözleşmesi iki dosyada tanımlanır:
 
-- [SKILL.md](skills/no-ai-slop-tr/SKILL.md): düzenleme ilkeleri, iki çalışma modu ve 29 kalıbın karar kuralları,
+- [SKILL.md](skills/no-ai-slop-tr/SKILL.md): düzenleme ilkeleri, iki çalışma modu ve 30 kalıbın karar kuralları,
 - [eval.md](skills/no-ai-slop-tr/eval.md): anlam korunumu, kişisel ses, Türkçe doğallık, false-positive kontrolü ve çıktı sözleşmesi için kalite kapısı.
 
-Davranışsal regresyon corpus'u [evals/](evals/) altında tutulur. Corpus, 29 kalıp için pozitif ve zor negatif örneklerin yanı sıra çakışma, dil kapsamı ve kalite vakalarını içerir. Uzun metin fixture'ları kişisel ses, teknik jargon, akademik kayıt, hukukî resmiyet ve benzeri bütünsel davranışları test eder.
+Davranışsal regresyon corpus'u [evals/](evals/) altında tutulur. Corpus, 30 kalıp için pozitif ve zor negatif örneklerin yanı sıra çakışma, dil kapsamı ve kalite vakalarını içerir. Uzun metin fixture'ları kişisel ses, teknik jargon, akademik kayıt, hukukî resmiyet ve benzeri bütünsel davranışları test eder.
 
 ## Repo yapısı
 

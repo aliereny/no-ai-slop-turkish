@@ -15,15 +15,16 @@ Amaç belirli bir "doğru cümle" üretmek değil; skill'in şu sözleşmeleri k
 - `cases.jsonl`: Kısa ve orta uzunlukta atomik vakaların canonical kaynağı.
 - `fixtures/long-form/`: Paragraf ve metin düzeyinde ses, ritim ve doğallık testleri.
 
-Corpus **149 atomik vaka** içerir:
+Corpus **159 atomik vaka** içerir:
 
-- PAT-01–PAT-29 için 4 vaka: 2 pozitif + 2 zor negatif = 116
+- PAT-01–PAT-30 için en az 4 vaka: 2 pozitif + 2 zor negatif = 120
 - PAT-29 için 1 ek işlevsel kullanım vakası
+- PAT-30 için 2 ek sınır vakası: kısa tanım ve işlevsel edebî geciktirme
 - 14 overlap/sınıflandırma vakası
 - 8 dil kapsamı vakası
-- 10 çapraz kalite vakası
+- 14 çapraz kalite vakası (4 adlandırma/düzenleme kontrolü dahil)
 
-8 uzun metin fixture'ı ile toplam **157 vaka** vardır.
+8 uzun metin fixture'ı ile toplam **167 vaka** vardır.
 
 ## Vaka kimlikleri
 
@@ -181,7 +182,7 @@ Skill değişikliğinden sonra önce tekil regresyonları çalıştırmak için 
 
 API ile çalıştırmak isterseniz `OPENAI_API_KEY=... python scripts/eval_runner.py run --provider api --model MODEL_ID --output eval-results/api-outputs.jsonl` komutunu kullanın. Bu ayrı API kullanımına tabidir.
 
-`grade` tespit başlıklarındaki kalıp adlarını `SKILL.md` içindeki 29 kalıbın sırasıyla eşler; beklenen/beklenmeyen bulguları ve düzenlemedeki birebir kalan sorunlu ifadeleri kontrol eder. Alıntının uygunluğu, gerçek yanlış pozitifler, anlam, üslup, yeni iddia ve uzun metin oracle'ları insan incelemesi ister. Otomatik kontrol geçse bile durum `review` kalır. `scope` vakaları da ana anlatım diline göre elle değerlendirilir. Başlıksız veya farklı adlandırılmış bulgular ayrıca incelenmelidir.
+`grade` tespit başlıklarındaki kalıp adlarını `SKILL.md` içindeki 30 kalıbın sırasıyla eşler; beklenen/beklenmeyen bulguları ve düzenlemedeki birebir kalan sorunlu ifadeleri kontrol eder. Alıntının uygunluğu, gerçek yanlış pozitifler, anlam, üslup, yeni iddia ve uzun metin oracle'ları insan incelemesi ister. Otomatik kontrol geçse bile durum `review` kalır. `scope` vakaları da ana anlatım diline göre elle değerlendirilir. Başlıksız veya farklı adlandırılmış bulgular ayrıca incelenmelidir.
 
 İnceleme dosyası bir JSON nesnesidir: `{"PAT-01-pos-01": {"verdict": "pass", "note": "Alıntı ve sınıflandırma doğru."}}`. Her vaka için gerekçeli `pass` veya `fail` girin. Ardından:
 
@@ -189,6 +190,6 @@ API ile çalıştırmak isterseniz `OPENAI_API_KEY=... python scripts/eval_runne
 python scripts/eval_runner.py grade --output eval-results/outputs.jsonl --review eval-results/reviews.json --report eval-results/report.json --strict
 ```
 
-`--strict`, 157 vakanın tamamında gerekçeli insan onayı ve sıfır otomatik hata ister; `fail`, `review` veya `pending` varsa sıfırdan farklı çıkar. Bu eşik için önerilen kalite kapısıdır. Hataları vaka ID'siyle düzeltip aynı modeli ve tüm corpus'u tekrar çalıştırın. CI yalnızca corpus sözleşmesini ve runner mantığını ağsız doğrular; canlı sonuçları varmış gibi göstermez.
+`--strict`, 167 vakanın tamamında gerekçeli insan onayı ve sıfır otomatik hata ister; `fail`, `review` veya `pending` varsa sıfırdan farklı çıkar. Bu eşik için önerilen kalite kapısıdır. Hataları vaka ID'siyle düzeltip aynı modeli ve tüm corpus'u tekrar çalıştırın. CI yalnızca corpus sözleşmesini ve runner mantığını ağsız doğrular; canlı sonuçları varmış gibi göstermez.
 
 GitHub'daki **Model eval baseline** workflow'u isteğe bağlı API yoludur; bunun için depoya `OPENAI_API_KEY` secret'ı eklemek gerekir. Genel/açık kaynak GitHub runner'ına ChatGPT oturum dosyanızı veya belirtecinizi koymayın. Pro aboneliğinizle test için yukarıdaki yerel Codex yolunu kullanın. Son insan incelemesi yerel `--review` ile tamamlanır.
