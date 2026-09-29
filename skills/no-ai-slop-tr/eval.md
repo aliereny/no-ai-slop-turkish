@@ -112,7 +112,7 @@ Her kontrolde iki şeyi birlikte değerlendir: slop işlevi temizlenmiş mi ve a
 
 **PAT-17 — Üçlü pazarlama sıfatları.** “hızlı, güçlü ve kullanıcı dostu” gibi kanıtsız pazarlama sıfatı kümeleri temizlenmiş mi? Gerçek ve birbirinden ayrı üç özelliğin sayıldığı listeler korunmuş mu?
 
-**PAT-18 — Yapay gözlem dili.** “karşımıza çıkıyor”, “dikkat çekiyor”, “öne çıkıyor”, “kendini gösteriyor” yalnızca olgunun varlığını dramatize ediyorsa doğrudanlaştırılmış mı? Gerçek bir karşılaştırmada bir özelliğin diğerlerinden ayrıldığını anlatan kullanım korunmuş mu?
+**PAT-18 — Yapay gözlem dili.** “karşımıza çıkıyor”, “dikkat çekiyor”, “öne çıkıyor”, “kendini gösteriyor” yalnızca olgunun varlığını dramatize ediyorsa doğrudanlaştırılmış mı? “Unsur”, “nokta”, “konu” gibi genel adlar bilinen olguyu gizliyorsa olgu adıyla belirtilmiş mi? Kaynakta bulunmayan “darboğaz”, “sorun”, “gelişim fırsatı” gibi özel bir sınıf veya ölçüm uydurulmamış mı? Genel adın gerçek bir sınıflandırmada ve “öne çıkıyor”un gerçek bir karşılaştırmada işlevsel kullanımı korunmuş mu?
 
 **PAT-19 — Çeviri kokan cümle iskeleti.** “X üzerinde etki yaratmak”, gereksiz “sahip olmak” zincirleri, “X tarafında” ve İngilizce isim ağırlıklı iskeletler gerçekten doğal olmayan yerde daha doğal Türkçe sözdizimine çevrilmiş mi? “Backend tarafında Go” gibi açık teknik ayrımlar sırf yüzey biçimi yüzünden değiştirilmemiş mi?
 
