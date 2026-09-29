@@ -176,6 +176,8 @@ Yerelde varsayılan sağlayıcı `codex`'tir: ChatGPT Pro/Plus oturumunuzla açt
 
 Bir vaka 300 saniyede bitmezse runner onu bir kez yeniden dener. Yeniden deneme de zaman aşımına uğrarsa kaydedilmiş vakalar korunur; aynı `run` komutunu tekrar çalıştırmak tamamlananları atlar. Yavaş bir çağrı için `--timeout 600`, yeniden deneme sayısını değiştirmek için `--retries 0`–`3` kullanabilirsiniz. Süre aşımı bir model başarısızlığı olarak puanlanmaz; vaka sonuç alınana kadar eksik kalır.
 
+Skill değişikliğinden sonra önce tekil regresyonları çalıştırmak için `--case-id PAT-13-pos-02` kullanın; seçeneği tekrarlayarak birden fazla ID seçebilirsiniz. Aynı çıktı dosyasıyla seçeneksiz `run` komutu kalan vakaları tamamlar. Corpus veya skill parmak izi değişmişse eski transcript'e ekleme yapılmaz; yeni bir dosya adı kullanın.
+
 API ile çalıştırmak isterseniz `OPENAI_API_KEY=... python scripts/eval_runner.py run --provider api --model MODEL_ID --output eval-results/api-outputs.jsonl` komutunu kullanın. Bu ayrı API kullanımına tabidir.
 
 `grade` tespit başlıklarındaki kalıp adlarını `SKILL.md` içindeki 28 kalıbın sırasıyla eşler; beklenen/beklenmeyen bulguları ve düzenlemedeki birebir kalan sorunlu ifadeleri kontrol eder. Alıntının uygunluğu, gerçek yanlış pozitifler, anlam, üslup, yeni iddia ve uzun metin oracle'ları insan incelemesi ister. Otomatik kontrol geçse bile durum `review` kalır. `scope` vakaları da ana anlatım diline göre elle değerlendirilir. Başlıksız veya farklı adlandırılmış bulgular ayrıca incelenmelidir.

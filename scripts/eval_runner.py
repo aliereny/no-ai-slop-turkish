@@ -12,6 +12,7 @@ import shutil
 import subprocess
 import sys
 import tempfile
+import unicodedata
 import urllib.error
 import urllib.request
 from pathlib import Path
@@ -23,6 +24,10 @@ SKILL = ROOT / 'skills/no-ai-slop-tr/SKILL.md'
 EVAL = ROOT / 'skills/no-ai-slop-tr/eval.md'
 HEADING = re.compile(r'^\*\*([^*]+)\.\*\*', re.M)
 REPORT_HEADING = re.compile(r'^\s*(?:#{1,5}\s*)?\*\*([^*]+)\*\*\s*$', re.M)
+
+
+def normalize_heading(value):
+    return unicodedata.normalize('NFKC', value).casefold().strip().rstrip('.').replace('’', "'").replace('‘', "'")
 
 
 def patterns():
@@ -211,6 +216,12 @@ def run(args):
     if args.provider == 'api' and not args.model:
         raise ValueError('--model is required for the API provider')
     data = validate()
+    if args.case_id:
+        wanted = set(args.case_id)
+        unknown = wanted - {case['id'] for case in data}
+        if unknown:
+            raise ValueError(f'Unknown case IDs: {", ".join(sorted(unknown))}')
+        data = [case for case in data if case['id'] in wanted]
     requested_model = args.model or 'codex-recommended'
     destination = Path(args.output)
     destination.parent.mkdir(parents=True, exist_ok=True)
@@ -251,8 +262,8 @@ def grade_case(case, output):
     reviews = []
     if case['mode'] == 'detect':
         names = patterns()
-        heading_names = {s.rstrip('.').casefold() for s in REPORT_HEADING.findall(output)}
-        found = {pid for pid, name in names.items() if name.casefold() in heading_names}
+        heading_names = {normalize_heading(s) for s in REPORT_HEADING.findall(output)}
+        found = {pid for pid, name in names.items() if normalize_heading(name) in heading_names}
         # An explicit ID in a heading is also accepted without changing the public skill format.
         found.update(re.findall(r'^\s*(?:#{1,5}\s*)?(?:\*\*)?(PAT-(?:0[1-9]|1\d|2[0-8]))\b', output, re.M))
         failures += [f'missing {pid}' for pid in e.get('must_find', []) if pid not in found]
@@ -318,6 +329,8 @@ def self_test():
     assert not grade_case(positive, '### Bulunan kalıplar\n**Önem şişirme**\n> "kritik"')[0]
     assert 'false positive PAT-18' in grade_case(positive, '**Önem şişirme**\n**Yapay gözlem dili**')[0]
     assert 'missing PAT-06' in grade_case(positive, 'Hiçbir kalıp yok.')[0]
+    typography = {'mode': 'detect', 'expect': {'must_find': ['PAT-27'], 'must_not_find': []}}
+    assert not grade_case(typography, '**Biçimlendirme slop’u**\n> “başlık”\nDüzeltme: Süsü kaldır.')[0]
     edit = {'mode': 'edit', 'expect': {'must_change': ['Boş giriş'], 'must_preserve': ['42']}}
     assert grade_case(edit, 'Boş giriş ve 42')[0] == ['unchanged: Boş giriş']
     events = ('{"type":"thread.started","thread_id":"t-1"}\n'
@@ -345,6 +358,7 @@ def main():
                         help='Local ChatGPT subscription via Codex CLI (default), or Responses API')
     runner.add_argument('--model', help='Pin a supported model ID; omit for Codex CLI recommended model')
     runner.add_argument('--output', required=True, help='JSONL transcript; resumes matching runs')
+    runner.add_argument('--case-id', action='append', help='Run only this case; repeat to select several, then omit for full resume')
     runner.add_argument('--timeout', type=int, default=300, help='Seconds allowed for each Codex call (default: 300)')
     runner.add_argument('--retries', type=int, default=1, help='Retries after a Codex timeout, 0-3 (default: 1)')
     grader = subs.add_parser('grade')
