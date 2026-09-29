@@ -1,2 +1,4 @@
 dist/
 /eval-results/
+.DS_Store
+.idea
