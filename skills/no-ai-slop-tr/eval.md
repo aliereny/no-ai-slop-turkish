@@ -102,7 +102,7 @@ Her kontrolde iki şeyi birlikte değerlendir: slop işlevi temizlenmiş mi ve a
 
 **PAT-12 — Edilgenlik sislemesi.** Kaynakta aktör belli olduğu halde sorumluluğu gereksiz gizleyen edilgen yapı düzeltilmiş mi? Aktör bilinmiyor veya önemsizse edilgen korunmuş; kaynakta olmayan aktör eklenmemiş mi?
 
-**PAT-13 — Olanak sağlama ve hale getirme zincirleri.** “mümkün hale getirmek”, “olanak sağlamak”, “yapabilir hale getirmek” gibi gereksiz zincirler doğrudanlaştırılmış mı? Gerçekten yeni bir yetenek veya imkân anlatan kullanımlar korunmuş mu?
+**PAT-13 — Olanak sağlama ve hale getirme zincirleri.** “mümkün hale getirmek”, “olanak sağlamak”, “yapabilir hale getirmek” gibi gereksiz zincirler doğrudanlaştırılmış mı? Genel bir hız/fayda iddiası, somut yeni erişim veya yetenek sanılmadan ele alınmış mı? Gerçekten yeni bir yetenek, erişim veya yetki anlatan kullanımlar korunmuş mu?
 
 **PAT-14 — Soyut isim yığılması.** Birden fazla soyut isim, tamlama veya isim-fiil eylemi görünmez hale getiriyorsa cümle çözülmüş mü? Teknik terim olan isim öbekleri korunmuş ve yeni aktör/neden/sonuç uydurulmamış mı?
 
@@ -114,7 +114,7 @@ Her kontrolde iki şeyi birlikte değerlendir: slop işlevi temizlenmiş mi ve a
 
 **PAT-18 — Yapay gözlem dili.** “karşımıza çıkıyor”, “dikkat çekiyor”, “öne çıkıyor”, “kendini gösteriyor” yalnızca olgunun varlığını dramatize ediyorsa doğrudanlaştırılmış mı? Gerçek bir karşılaştırmada bir özelliğin diğerlerinden ayrıldığını anlatan kullanım korunmuş mu?
 
-**PAT-19 — Çeviri kokan cümle iskeleti.** “X üzerinde etki yaratmak”, gereksiz “sahip olmak” zincirleri, “X tarafında” ve İngilizce isim ağırlıklı iskeletler daha doğal Türkçe sözdizimine çevrilmiş mi? Teknik toplulukta yerleşmiş terimler sırf yabancı kökenli oldukları için değiştirilmemiş mi?
+**PAT-19 — Çeviri kokan cümle iskeleti.** “X üzerinde etki yaratmak”, gereksiz “sahip olmak” zincirleri, “X tarafında” ve İngilizce isim ağırlıklı iskeletler gerçekten doğal olmayan yerde daha doğal Türkçe sözdizimine çevrilmiş mi? “Backend tarafında Go” gibi açık teknik ayrımlar sırf yüzey biçimi yüzünden değiştirilmemiş mi?
 
 ### Ritim, kapanış ve biçimlendirme
 
@@ -130,7 +130,7 @@ Her kontrolde iki şeyi birlikte değerlendir: slop işlevi temizlenmiş mi ve a
 
 **PAT-25 — Yapay vurucu kapanış.** Gereksiz aforizmatik veya “mikrofon bırakma” kapanışı silinmiş mi? Daha süslü yeni bir metaforla değiştirilmemiş ve metin mevcut somut nokta, çıkarım veya sonraki adımla bitirilmiş mi?
 
-**PAT-26 — Özet-tekrar kapanışları.** Metinde az önce söylenenleri tekrar eden “Sonuç olarak”, “Özetle”, “Genel olarak değerlendirildiğinde” kapanışları temizlenmiş mi? Akademik, rapor veya format gereği gerçek sonuç bölümü gerekiyorsa korunmuş mu?
+**PAT-26 — Özet-tekrar kapanışları.** Metinde az önce söylenenleri tekrar eden “Sonuç olarak”, “Özetle”, “Genel olarak değerlendirildiğinde” kapanışları temizlenmiş mi? Önceki metin yoksa sırf bağlaçtan tekrar varsayılmamış mı? Akademik, rapor veya format gereği gerçek sonuç bölümü gerekiyorsa korunmuş mu?
 
 **PAT-27 — Biçimlendirme slop'u.** Gereksiz emoji başlıklar, dekoratif kalın yazılar, iki cümlelik bölümlerin üstündeki süs başlıkları ve gereksiz madde listeleri temizlenmiş mi? Kullanıcının yayın kanalı veya formatı bu öğeleri gerektiriyorsa korunmuş mu?
 
@@ -138,7 +138,7 @@ Her kontrolde iki şeyi birlikte değerlendir: slop işlevi temizlenmiş mi ve a
 
 ## Çakışma ve sınıflandırma
 
-**OVERLAP-01 — Tek sorunu çift raporlamama.** Aynı dil parçasındaki aynı işlevsel sorun birden fazla kalıp adıyla raporlanmış mı? Öyleyse en spesifik kalıp seçilmeli.
+**OVERLAP-01 — Tek sorunu çift raporlamama.** Aynı dil parçasındaki aynı işlevsel sorun birden fazla kalıp adıyla raporlanmış mı? Öyleyse en spesifik kalıp seçilmeli. Dekoratif bir başlığın kendisi PAT-27 diye raporlandıysa aynı başlığı PAT-07 diye bir daha sayma; bağımsız okur yönlendirmesi ayrı olabilir.
 
 **OVERLAP-02 — Bağımsız sorunları koruma.** Aynı cümlede farklı dil parçalarında gerçekten bağımsız iki sorun varsa yanlışlıkla tek bulguya indirilmiş mi? Bağımsız sorunlar ayrı raporlanabilir.
 
