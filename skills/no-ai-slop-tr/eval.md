@@ -136,7 +136,9 @@ Her kontrolde iki şeyi birlikte değerlendir: slop işlevi temizlenmiş mi ve a
 
 **PAT-28 — Uzun çizgi.** Uzun çizgi (—) sırf ritim süsü olarak kümeleniyorsa azaltılmış mı? Anlamı veya ritmi gerçekten iyileştiren kullanımlar korunmuş ve sayısal bir kota uygulanmamış mı?
 
-**PAT-29 — Geciken adlandırma.** Yalın göstericinin neyi anlattığı eldeki bağlamdan anlaşılmıyor ve ad uzun bir niteleme veya kurulumdan sonra geliyorsa kaynakta bulunan ad öne alınmış mı? Öncesi verilmeyen cümle kendi içinde değerlendirilmiş mi? Açık gönderimler, adı başta belli yapılar, kısa tanımlar, işlevsel edebî geciktirme ve doğrudan alıntılar korunmuş mu? Ad kaynakta yoksa veya anlam belirsizse tahmin yerine gerekli soru sorulmuş mu? Sözcük sayısı kotası veya genel bir “Bu ile başlama” yasağı uygulanmamış mı?
+**PAT-29 — Genel adla belirsizleştirme.** “Unsur”, “nokta”, “konu” gibi genel adlar bilinen olguyu gizliyorsa olgu adıyla belirtilmiş mi? Kaynakta bulunmayan “darboğaz”, “sorun”, “gelişim fırsatı” gibi özel bir sınıf veya ölçüm uydurulmamış mı? Genel adın gerçek bir sınıflandırma veya konu belirtme işlevi korunmuş mu? Gözlemci dolgu ile aynı sorunu iki kez raporlamadan PAT-18 ayrımı yapılmış mı?
+
+**PAT-30 — Geciken adlandırma.** Yalın göstericinin neyi anlattığı eldeki bağlamdan anlaşılmıyor ve ad uzun bir niteleme veya kurulumdan sonra geliyorsa kaynakta bulunan ad öne alınmış mı? Öncesi verilmeyen cümle kendi içinde değerlendirilmiş mi? Açık gönderimler, adı başta belli yapılar, kısa tanımlar, işlevsel edebî geciktirme ve doğrudan alıntılar korunmuş mu? Ad kaynakta yoksa veya anlam belirsizse tahmin yerine gerekli soru sorulmuş mu? Sözcük sayısı kotası veya genel bir “Bu ile başlama” yasağı uygulanmamış mı?
 
 ## Çakışma ve sınıflandırma
 
@@ -148,7 +150,7 @@ Her kontrolde iki şeyi birlikte değerlendir: slop işlevi temizlenmiş mi ve a
 
 **OVERLAP-04 — Gözlem/yorum/önem ayrımı.** “karşımıza çıkıyor” türü gözlemci dolgu **Yapay gözlem dili**; olgunun neyi gösterdiğine dair kanıtsız yorum **Göstermeden yorumlayan analiz**; büyüklük veya tarihsel ağırlık etiketi **Önem şişirme** olarak sınıflandırılmış mı?
 
-**OVERLAP-05 — Geciken adlandırma ve diğer kalıplar.** Tek cümledeki gecikmiş adlandırma PAT-29 olarak değerlendirilmiş, yalnızca gösterici içerdiği için ayrıca PAT-15 sayılmamış mı? Ardışık belirsiz bağlamalar PAT-15 altında kalmış mı? Karşıtlık kurulumundaki genel X sınıfı, sonda açıklanan asıl Y adının baştan belli olduğu şeklinde yorumlanmış mı? PAT-01 ve PAT-29 birlikte raporlanıyorsa yapay vurgu ve geciken adlandırma için ayrı işlevsel gerekçe verilmiş mi? Tek düzenleme iki bağımsız sorunu çözebilir.
+**OVERLAP-05 — Geciken adlandırma ve diğer kalıplar.** Tek cümledeki gecikmiş adlandırma PAT-30 olarak değerlendirilmiş, yalnızca gösterici içerdiği için ayrıca PAT-15 sayılmamış mı? Ardışık belirsiz bağlamalar PAT-15 altında kalmış mı? Karşıtlık kurulumundaki genel X sınıfı, sonda açıklanan asıl Y adının baştan belli olduğu şeklinde yorumlanmış mı? PAT-01 ve PAT-30 birlikte raporlanıyorsa yapay vurgu ve geciken adlandırma için ayrı işlevsel gerekçe verilmiş mi? Tek düzenleme iki bağımsız sorunu çözebilir.
 
 ## Türkçe doğallık kontrolü
 

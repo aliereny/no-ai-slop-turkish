@@ -33,8 +33,8 @@ def normalize_heading(value):
 def patterns():
     section = SKILL.read_text().split('## Kaçınılacak kalıplar', 1)[1].split('## Çıktı biçimi', 1)[0]
     names = HEADING.findall(section)[1:]  # first heading describes overlap, not a pattern
-    if len(names) != 29 or len(set(names)) != 29:
-        raise ValueError('SKILL.md must define exactly 29 distinct patterns')
+    if len(names) != 30 or len(set(names)) != 30:
+        raise ValueError('SKILL.md must define exactly 30 distinct patterns')
     return {f'PAT-{i:02}': name for i, name in enumerate(names, 1)}
 
 
@@ -63,8 +63,8 @@ def cases():
 def validate():
     names = patterns()
     data = cases()
-    if len(data) != 158 or len(fixtures()) != 8 or len({v['id'] for v in data}) != len(data):
-        raise ValueError('Expected 150 unique atomic cases and 8 unique long-form fixtures')
+    if len(data) != 167 or len(fixtures()) != 8 or len({v['id'] for v in data}) != len(data):
+        raise ValueError('Expected 159 unique atomic cases and 8 unique long-form fixtures')
     for case in data:
         if not all(case.get(k) for k in ('id', 'mode', 'register', 'input')) or not isinstance(case.get('expect'), dict):
             raise ValueError(f'Invalid case: {case.get("id")}')
@@ -330,16 +330,21 @@ def self_test():
     assert not grade_case(positive, '### Bulunan kalıplar\n**Önem şişirme**\n> "kritik"')[0]
     assert 'false positive PAT-18' in grade_case(positive, '**Önem şişirme**\n**Yapay gözlem dili**')[0]
     assert 'missing PAT-06' in grade_case(positive, 'Hiçbir kalıp yok.')[0]
+    generic_noun = {'mode': 'detect', 'expect': {'must_find': ['PAT-29'], 'must_not_find': ['PAT-18']}}
+    assert not grade_case(generic_noun, '**Genel adla belirsizleştirme**\n> “sorunlu nokta”')[0]
+    assert not grade_case(generic_noun, '**PAT-29**\n> “sorunlu nokta”')[0]
+    assert 'false positive PAT-18' in grade_case(generic_noun, '**PAT-29**\n**Yapay gözlem dili**')[0]
     typography = {'mode': 'detect', 'expect': {'must_find': ['PAT-27'], 'must_not_find': []}}
     assert not grade_case(typography, '**Biçimlendirme slop’u**\n> “başlık”\nDüzeltme: Süsü kaldır.')[0]
-    delayed = {'mode': 'detect', 'expect': {'must_find': ['PAT-29'], 'must_not_find': ['PAT-15']}}
+    assert patterns()['PAT-29'] == 'Genel adla belirsizleştirme'
+    delayed = {'mode': 'detect', 'expect': {'must_find': ['PAT-30'], 'must_not_find': ['PAT-15']}}
     assert patterns()['PAT-15'] == 'Gösterici zamir zinciri'
     assert patterns()['PAT-28'] == 'Uzun çizgi'
-    assert patterns()['PAT-29'] == 'Geciken adlandırma'
+    assert patterns()['PAT-30'] == 'Geciken adlandırma'
     assert not grade_case(delayed, '**Geciken adlandırma**\n> “Bu ... bir platform.”')[0]
-    assert not grade_case(delayed, '### PAT-29 — Geciken adlandırma')[0]
-    assert 'false positive PAT-15' in grade_case(delayed, '**PAT-29**\n**PAT-15**')[0]
-    assert 'missing PAT-29' in grade_case(delayed, '### PAT-290\n### PAT-99')[0]
+    assert not grade_case(delayed, '### PAT-30 — Geciken adlandırma')[0]
+    assert 'false positive PAT-15' in grade_case(delayed, '**PAT-30**\n**PAT-15**')[0]
+    assert 'missing PAT-30' in grade_case(delayed, '### PAT-300\n### PAT-99')[0]
     edit = {'mode': 'edit', 'expect': {'must_change': ['Boş giriş'], 'must_preserve': ['42']}}
     assert grade_case(edit, 'Boş giriş ve 42')[0] == ['unchanged: Boş giriş']
     events = ('{"type":"thread.started","thread_id":"t-1"}\n'
