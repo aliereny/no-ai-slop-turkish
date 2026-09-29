@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- `PAT-29 — Genel adla belirsizleştirme` eklendi; tespit, işlevsel kullanım, PAT-14/PAT-18 çakışması ve anlam korunumu için dokuz odaklı vaka tanımlandı. Toplam 29 kalıp ve 157 eval vakası.
+
 ## v0.2.0 — Preview
 
 - Türkçeye özgü 28 kalıbı ve bağlama duyarlı istisnaları içeren skill paketi.

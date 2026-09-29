@@ -136,6 +136,8 @@ Her kontrolde iki şeyi birlikte değerlendir: slop işlevi temizlenmiş mi ve a
 
 **PAT-28 — Uzun çizgi.** Uzun çizgi (—) sırf ritim süsü olarak kümeleniyorsa azaltılmış mı? Anlamı veya ritmi gerçekten iyileştiren kullanımlar korunmuş ve sayısal bir kota uygulanmamış mı?
 
+**PAT-29 — Genel adla belirsizleştirme.** “Unsur”, “nokta”, “konu” gibi genel adlar bilinen olguyu gizliyorsa olgu adıyla belirtilmiş mi? Kaynakta bulunmayan “darboğaz”, “sorun”, “gelişim fırsatı” gibi özel bir sınıf veya ölçüm uydurulmamış mı? Genel adın gerçek bir sınıflandırma veya konu belirtme işlevi korunmuş mu? Gözlemci dolgu ile aynı sorunu iki kez raporlamadan PAT-18 ayrımı yapılmış mı?
+
 ## Çakışma ve sınıflandırma
 
 **OVERLAP-01 — Tek sorunu çift raporlamama.** Aynı dil parçasındaki aynı işlevsel sorun birden fazla kalıp adıyla raporlanmış mı? Öyleyse en spesifik kalıp seçilmeli. Dekoratif bir başlığın kendisi PAT-27 diye raporlandıysa aynı başlığı PAT-07 diye bir daha sayma; bağımsız okur yönlendirmesi ayrı olabilir.
