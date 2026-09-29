@@ -33,8 +33,8 @@ def normalize_heading(value):
 def patterns():
     section = SKILL.read_text().split('## Kaçınılacak kalıplar', 1)[1].split('## Çıktı biçimi', 1)[0]
     names = HEADING.findall(section)[1:]  # first heading describes overlap, not a pattern
-    if len(names) != 28 or len(set(names)) != 28:
-        raise ValueError('SKILL.md must define exactly 28 distinct patterns')
+    if len(names) != 29 or len(set(names)) != 29:
+        raise ValueError('SKILL.md must define exactly 29 distinct patterns')
     return {f'PAT-{i:02}': name for i, name in enumerate(names, 1)}
 
 
@@ -63,8 +63,8 @@ def cases():
 def validate():
     names = patterns()
     data = cases()
-    if len(data) != 148 or len(fixtures()) != 8 or len({v['id'] for v in data}) != len(data):
-        raise ValueError('Expected 140 unique atomic cases and 8 unique long-form fixtures')
+    if len(data) != 158 or len(fixtures()) != 8 or len({v['id'] for v in data}) != len(data):
+        raise ValueError('Expected 150 unique atomic cases and 8 unique long-form fixtures')
     for case in data:
         if not all(case.get(k) for k in ('id', 'mode', 'register', 'input')) or not isinstance(case.get('expect'), dict):
             raise ValueError(f'Invalid case: {case.get("id")}')
@@ -265,7 +265,8 @@ def grade_case(case, output):
         heading_names = {normalize_heading(s) for s in REPORT_HEADING.findall(output)}
         found = {pid for pid, name in names.items() if normalize_heading(name) in heading_names}
         # An explicit ID in a heading is also accepted without changing the public skill format.
-        found.update(re.findall(r'^\s*(?:#{1,5}\s*)?(?:\*\*)?(PAT-(?:0[1-9]|1\d|2[0-8]))\b', output, re.M))
+        found.update(pid for pid in re.findall(r'^\s*(?:#{1,5}\s*)?(?:\*\*)?(PAT-\d{2})\b', output, re.M)
+                     if pid in names)
         failures += [f'missing {pid}' for pid in e.get('must_find', []) if pid not in found]
         failures += [f'false positive {pid}' for pid in e.get('must_not_find', []) if pid in found]
         if e.get('must_not_score') and re.search(r'(?:%\s*AI|AI\s*%|slop\s*(?:skoru|puanı|yüzdesi))', output, re.I):
@@ -331,6 +332,14 @@ def self_test():
     assert 'missing PAT-06' in grade_case(positive, 'Hiçbir kalıp yok.')[0]
     typography = {'mode': 'detect', 'expect': {'must_find': ['PAT-27'], 'must_not_find': []}}
     assert not grade_case(typography, '**Biçimlendirme slop’u**\n> “başlık”\nDüzeltme: Süsü kaldır.')[0]
+    delayed = {'mode': 'detect', 'expect': {'must_find': ['PAT-29'], 'must_not_find': ['PAT-15']}}
+    assert patterns()['PAT-15'] == 'Gösterici zamir zinciri'
+    assert patterns()['PAT-28'] == 'Uzun çizgi'
+    assert patterns()['PAT-29'] == 'Geciken adlandırma'
+    assert not grade_case(delayed, '**Geciken adlandırma**\n> “Bu ... bir platform.”')[0]
+    assert not grade_case(delayed, '### PAT-29 — Geciken adlandırma')[0]
+    assert 'false positive PAT-15' in grade_case(delayed, '**PAT-29**\n**PAT-15**')[0]
+    assert 'missing PAT-29' in grade_case(delayed, '### PAT-290\n### PAT-99')[0]
     edit = {'mode': 'edit', 'expect': {'must_change': ['Boş giriş'], 'must_preserve': ['42']}}
     assert grade_case(edit, 'Boş giriş ve 42')[0] == ['unchanged: Boş giriş']
     events = ('{"type":"thread.started","thread_id":"t-1"}\n'
@@ -365,7 +374,7 @@ def main():
     grader.add_argument('--output', required=True)
     grader.add_argument('--review', help='JSON object: case ID -> {verdict: pass|fail, note: rationale}')
     grader.add_argument('--report')
-    grader.add_argument('--strict', action='store_true', help='Exit nonzero unless all 148 cases pass review')
+    grader.add_argument('--strict', action='store_true', help='Exit nonzero unless all corpus cases pass review')
     args = parser.parse_args()
     if args.command == 'validate':
         print(f'Validated {len(validate())} cases ({len(fixtures())} long-form)')

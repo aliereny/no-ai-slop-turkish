@@ -127,6 +127,10 @@ Dekoratif “## ✨ Neden önemli?” başlığını işlevsiz biçimi nedeniyle
 
 **Uzun çizgi.** Uzun çizgiyi (—) Türkçe metinde tek başına slop işareti sayma. Ancak virgül, nokta veya parantezin daha doğal olduğu yerde dekoratif ritim aracı olarak sürekli tekrarlanıyorsa azalt. Kısa metinlerde gereksiz kümeleri temizle; uzun metinlerde anlamı ve ritmi gerçekten iyileştiren kullanımları koru.
 
+**Geciken adlandırma.** Cümle yalın “Bu” gibi bir göstericiyle başlıyor, neyin anlatıldığı eldeki bağlamdan anlaşılmıyor ve bunu açıklayan ad ancak uzun bir niteleme veya dolambaçlı kurulumun sonunda geliyorsa, kaynakta bulunan adı öne al. Önce “sadece X değil” gibi bir kurulumla neyi aştığını anlatıp asıl adı sona bırakmak da buna dahildir. Önceki cümle verilmemişse varmış gibi bir gönderim kurma; tek cümleyi kendi içinde değerlendir. “Bu, farklı kaynaklardan gelen satış verilerini tek ekranda birleştiren bir platform.” yerine “Bu platform, farklı kaynaklardan gelen satış verilerini tek ekranda birleştiriyor.” de. Ölçüt “bu” sözcüğü veya adın sonda oluşu değil, okurun ne anlatıldığını anlamak için geriye dönmek zorunda kalmasıdır; kelime sayısı kotası uygulama. “Bu platform...” gibi adı başta belli olan yapıları, açık bağlamsal göndermeleri, “Bu bir hata.” gibi kısa ve doğrudan tanımları ve işlevsel edebî geciktirmeyi koru. Doğrudan alıntıyı bu gerekçeyle değiştirme. Ad metinde hiç yoksa veya birden fazla yorum mümkünse tahmin etme; düzenleme için gerekli belirsizliği kullanıcıya sor.
+
+Tek cümledeki geciken adlandırmayı ayrıca **Gösterici zamir zinciri** diye sayma; o kalıp ardışık belirsiz bağlamalar içindir. “sadece X değil, aynı zamanda ... Y” kurulumunda önce sunulan genel X sınıfını, sonda açıklanan asıl Y adının zaten belli olduğu şeklinde yorumlama. Sahte karşıtlık, iddiaya yapay vurgu katması nedeniyle; geciken adlandırma, anlatılan varlığın adını geciktirmesi nedeniyle ayrı ayrı değerlendirilebilir. Bir düzenlemenin iki sorunu birden çözmesi tek başına bunları aynı bulgu yapmaz; her bulgu için kendi işlevsel gerekçesini göster.
+
 ## Çıktı biçimi
 
 ### Tespit modu
