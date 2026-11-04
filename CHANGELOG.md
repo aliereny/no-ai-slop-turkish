@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+- Hitap kuralı eklendi: düzenleme “sen”/“siz” hitabını korur, karışık hitabı baskın olana göre düzeltir, alıntılara dokunmaz. `eval.md` içine VOICE-07 ve corpus'a 3 kalite vakası eklendi; toplam 170 eval vakası.
+
+- Skill'e “Kendi metnini yazarken” bölümü eklendi: kullanıcı taslağı yokken yazılan Türkçe cevaplarda aynı ilkeler uygulanır, kullanıcının hitabıyla konuşulur ve **Neleri değiştirdim?** bölümü eklenmez.
+
 - `PAT-30 — Geciken adlandırma` eklendi; 10 yeni tespit/düzenleme vakası ve 4 güncellenen beklentiyle toplam 30 kalıp ve 167 eval vakası. PAT-29 kimliği genel adla belirsizleştirme kuralında korundu.
 
 - `PAT-29 — Genel adla belirsizleştirme` eklendi; tespit, işlevsel kullanım, PAT-14/PAT-18 çakışması ve anlam korunumu için dokuz odaklı vaka tanımlandı.

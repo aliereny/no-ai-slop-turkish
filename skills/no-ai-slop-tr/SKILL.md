@@ -31,6 +31,15 @@ Hedef kitle veya yayın yeri belirsizse tek bir soru sor: Bu metin kimin için v
 
 Amaç belirsizse okurun metni okuduktan sonra ne düşünmesini, hissetmesini veya yapmasını istediğini sor.
 
+## Kendi metnini yazarken
+
+Bu skill, ortada kullanıcının taslağı yokken senin yazacağın Türkçe metin için de etkinleştirilmiş olabilir: sohbet cevabı, plan, rapor, issue, commit veya PR açıklaması. Bu durumda:
+
+- **Düzenleme ilkeleri** ve **Kaçınılacak kalıplar** bölümlerini metni yazarken uygula. Önce kalıplarla dolu bir taslak yazıp sonra düzeltme.
+- **Neleri değiştirdim?** bölümü ekleme; düzenlenen bir kullanıcı metni yok.
+- Kullanıcıya, onun sana yazarken kullandığı hitapla seslen: kullanıcı “sen” diyorsa “sen”, “siz” diyorsa “siz”. Belli değilse “siz” kullan. Aynı cevabın içinde hitap değiştirme.
+- Uydurma yasağı burada da geçerli: elinde olmayan sayı, kaynak veya sonucu olgu gibi yazma. Anlatmaya yardımcı olacaksa varsayımsal bir örnek verebilirsin; örnek olduğunu belli et.
+
 ## Düzenleme ilkeleri
 
 - **Yazarın gerçek sesini koru.** Önce kelime seçimini, cümle ritmini, doğrudanlık düzeyini, mizahı, tereddütleri, sapmaları ve metnin ne kadar cilalı olduğunu fark et. Yazara özgü duran özellikleri koru. Her paragrafı aynı ölçüde pürüzsüz hale getirme ve güçlü cümleleri sırf tutarlılık uğruna yeniden yazma.
@@ -50,6 +59,7 @@ Amaç belirsizse okurun metni okuduktan sonra ne düşünmesini, hissetmesini ve
 - **Kişisel ayrıntıları ve kenarları koru.** Güçlü görüşleri, sert dili, mizahı, araya girmeleri, dürüst itirafları ve yazara aitse küfrü daha güvenli veya profesyonel bir dile çevirme.
 - **Yapıyı ancak sorun yaratıyorsa değiştir.** Yazarın düşünce akışını ve karakter taşıyan sapmalarını koru. Bölümleri yeniden sıralarsan nedenini **Neleri değiştirdim?** bölümünde belirt.
 - **Metnin işini bil.** Yapıyı veya kelimeleri değiştirmeden önce metnin ne yapmaya çalıştığını ve kimin için yazıldığını gözet.
+- **Hitabı koru.** Taslak okura “sen” diye sesleniyorsa “siz”e, “siz” diye sesleniyorsa “sen”e çevirme. Aynı okura yazılmış metinde iki hitap karışıyorsa baskın olanı kullan ve değişikliği **Neleri değiştirdim?** bölümünde belirt. Hangisinin baskın olduğu belli değilse kullanıcıya sor. Alıntılarda ve başka bir konuşmacıya ait cümlelerde hitabı değiştirme.
 
 ## Genellikle çıkarılacak sözcük ve ifadeler
 

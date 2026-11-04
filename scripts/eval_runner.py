@@ -63,8 +63,8 @@ def cases():
 def validate():
     names = patterns()
     data = cases()
-    if len(data) != 167 or len(fixtures()) != 8 or len({v['id'] for v in data}) != len(data):
-        raise ValueError('Expected 159 unique atomic cases and 8 unique long-form fixtures')
+    if len(data) != 170 or len(fixtures()) != 8 or len({v['id'] for v in data}) != len(data):
+        raise ValueError('Expected 162 unique atomic cases and 8 unique long-form fixtures')
     for case in data:
         if not all(case.get(k) for k in ('id', 'mode', 'register', 'input')) or not isinstance(case.get('expect'), dict):
             raise ValueError(f'Invalid case: {case.get("id")}')

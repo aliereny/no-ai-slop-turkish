@@ -50,6 +50,8 @@ Tespit modunda metni yeniden yazma. Bu modda düzenleme sonrası kontrolleri de�
 
 **VOICE-06 — Müdahale ve kesme orantısı.** Yapılan değişiklik ve kesme miktarı metindeki gerçek slop, tekrar ve belirsizlikle orantılı mı? Ham ama karakterli ayrıntılar, sapmalar, ritim veya kişisel malzeme sırf metni daha kısa ve düzenli yapmak için agresif biçimde budanmamış olmalı.
 
+**VOICE-07 — Hitap.** Taslağın “sen” veya “siz” hitabı korunmuş mu? Karışık hitap baskın olana göre düzeltildiyse bu **Neleri değiştirdim?** bölümünde belirtilmiş mi? Alıntılardaki ve başka konuşmacılara ait cümlelerdeki hitap değişmeden kalmış mı?
+
 ## Genel düzenleme ilkeleri
 
 **EDIT-PRINCIPLE-01 — Konuya giriş.** Boş ve genel girişler kesilmiş; bağlam, gerilim veya karakter taşıyan kişisel girişler korunmuş mu?
